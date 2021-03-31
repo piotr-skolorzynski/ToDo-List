@@ -4,11 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/main.css">
     <title>ToDo List</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c277eafce0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-    
+        <div class="todo-header">
+            <h1>ToDo List</h1>
+            <div class="add-task">
+                <input type="text">
+                <button class="addBtn">Add</button>
+            </div>
+        </div>    
+        <div class="todo-body">
+            <h2>Lista zadań:</h2>
+            <p class="warning">Brak zadań na liście!</p>
+            <ul class="todo-list"></ul>
+        </div>     
     <script src="./js/main.js"></script>
 </body>
 </html>
