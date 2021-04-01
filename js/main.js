@@ -4,6 +4,17 @@ let $info; //paragraph to show warnings
 let $list; //list of tasks
 let $task; //single task
 
+//function responsible for deleting tasks
+const deleteTask = e => {
+    const taskToDelete = e.target.closest('li');
+    taskToDelete.remove();
+    const refreshedList = document.getElementsByClassName('list-item');
+    // console.log(refreshedList.length);
+    if(refreshedList.length === 0) {
+        $info.innerHTML = 'Brak zadań na liście!';
+    }
+};
+
 //function responsible for reconing which tools button was clicked and what procedure to start
 const checkClick = e => {
     console.log(e.target);
@@ -12,8 +23,8 @@ const checkClick = e => {
     } else if (e.target.closest('button').classList.contains('editBtn')) {
         console.log('kliknięto przycisk edit');
     } else if (e.target.closest('button').classList.contains('deleteBtn')) {
-        console.log('kliknięto przycisk delete');
-        //deleteTask(e);
+        // console.log('kliknięto przycisk delete');
+        deleteTask(e);
     }
 };
 
