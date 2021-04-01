@@ -4,8 +4,42 @@ let $info; //paragraph to show warnings
 let $list; //list of tasks
 let $task; //single task
 
+//function creating tools to manipulate single task
+const addBtns = () => {
+    const div = document.createElement('div');
+    div.classList.add('tools');
+    const checkBtn = document.createElement('button');
+    checkBtn.classList.add('btn');
+    checkBtn.classList.add('checkBtn');
+    checkBtn.innerHTML = '<i class="fas fa-check"></i>';
+    div.appendChild(checkBtn);    
+    const editBtn = document.createElement('button');
+    editBtn.classList.add('btn');
+    editBtn.classList.add('editBtn');
+    editBtn.innerHTML = '<i class="far fa-edit"></i>';
+    div.appendChild(editBtn);    
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('btn');
+    deleteBtn.classList.add('deleteBtn');
+    deleteBtn.innerHTML = '<i class="far fa-trash-alt"></i>';
+    div.appendChild(deleteBtn);
+    $task.appendChild(div);
+};
 
-
+//function creating single task
+const addTask = () => {//adding task
+    if ($input.value !== '') {
+        $task = document.createElement('li');
+        $task.classList.add('list-item');
+        $task.innerHTML = $input.value;
+        addBtns();
+        $list.appendChild($task);
+        $input.value = '';
+        $info.innerText = '';
+    } else {
+        $info.innerText = 'Wpisz treść zadania!';
+    }
+};
 
 //catch elements on site
 const prepareDOMElements = () => {
@@ -21,7 +55,7 @@ const prepareDOMElements = () => {
 
 //listen events 
 const prepareDOMEvents = () => {
-    //$addBtn.addEventListener('click', addTask);
+    // $addBtn.addEventListener('click', addTask);
 };
 
 const main = () => {
