@@ -4,6 +4,19 @@ let $info; //paragraph to show warnings
 let $list; //list of tasks
 let $task; //single task
 
+//function responsible for reconing which tools button was clicked and what procedure to start
+const checkClick = e => {
+    console.log(e.target);
+    if (e.target.closest('button').classList.contains('checkBtn')) {
+        e.target.closest('li').classList.toggle('completed');
+    } else if (e.target.closest('button').classList.contains('editBtn')) {
+        console.log('kliknięto przycisk edit');
+    } else if (e.target.closest('button').classList.contains('deleteBtn')) {
+        console.log('kliknięto przycisk delete');
+        //deleteTask(e);
+    }
+};
+
 //function creating tools to manipulate single task
 const addBtns = () => {
     const div = document.createElement('div');
@@ -55,7 +68,8 @@ const prepareDOMElements = () => {
 
 //listen events 
 const prepareDOMEvents = () => {
-    // $addBtn.addEventListener('click', addTask);
+    $addBtn.addEventListener('click', addTask);
+    $list.addEventListener('click', checkClick);
 };
 
 const main = () => {
