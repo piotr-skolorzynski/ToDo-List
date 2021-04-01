@@ -17,7 +17,7 @@ const deleteTask = e => {
 
 //function responsible for reconing which tools button was clicked and what procedure to start
 const checkClick = e => {
-    console.log(e.target);
+    // console.log(e.target);
     if (e.target.closest('button').classList.contains('checkBtn')) {
         e.target.closest('li').classList.toggle('completed');
     } else if (e.target.closest('button').classList.contains('editBtn')) {
@@ -65,6 +65,13 @@ const addTask = () => {//adding task
     }
 };
 
+//function responsible for starting addTask function after pushing enter button
+const checkEnter = e => { 
+    if (e.code === 'Enter') {
+        addTask();
+    }
+};
+
 //catch elements on site
 const prepareDOMElements = () => {
     $input = document.querySelector('input');
@@ -81,6 +88,7 @@ const prepareDOMElements = () => {
 const prepareDOMEvents = () => {
     $addBtn.addEventListener('click', addTask);
     $list.addEventListener('click', checkClick);
+    $input.addEventListener('keyup', checkEnter);
 };
 
 const main = () => {
