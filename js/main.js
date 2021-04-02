@@ -3,6 +3,8 @@ let $addBtn; //add task button
 let $info; //paragraph to show warnings
 let $list; //list of tasks
 let $task; //single task
+const $min = 0; //lower limit id number
+const $max = 100; //upper limit id number
 
 //function responsible for deleting tasks
 const deleteTask = e => {
@@ -10,7 +12,7 @@ const deleteTask = e => {
     taskToDelete.remove();
     const refreshedList = document.getElementsByClassName('list-item');
     // console.log(refreshedList.length);
-    if(refreshedList.length === 0) {
+    if (refreshedList.length === 0) {
         $info.innerHTML = 'Brak zadań na liście!';
     }
 };
@@ -26,6 +28,12 @@ const checkClick = e => {
         // console.log('kliknięto przycisk delete');
         deleteTask(e);
     }
+};
+
+//function generating id number
+const generateID = (min,max) => {
+    const id = Math.floor(Math.random() * ((max - min + 1) + min));
+    return id;
 };
 
 //function creating tools to manipulate single task
@@ -56,6 +64,9 @@ const addTask = () => {//adding task
         $task = document.createElement('li');
         $task.classList.add('list-item');
         $task.innerHTML = $input.value;
+        const idValue = generateID($min, $max);
+        $task.setAttribute('id', idValue);
+        // console.log($task);
         addBtns();
         $list.appendChild($task);
         $input.value = '';
