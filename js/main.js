@@ -5,6 +5,15 @@ let $list; //list of tasks
 let $task; //single task
 const $min = 0; //lower limit id number
 const $max = 100; //upper limit id number
+let $popup; //popup
+let $popupInput; //popup task to edit
+let $acceptBtn; //popup btn to accept changes in edeited task
+let $cancelBtn; //popup btn to resign edit mode
+
+const editTask = e => {
+    $popup.style.display = 'block';
+};
+
 
 //function responsible for deleting tasks
 const deleteTask = e => {
@@ -23,7 +32,8 @@ const checkClick = e => {
     if (e.target.closest('button').classList.contains('checkBtn')) {
         e.target.closest('li').classList.toggle('completed');
     } else if (e.target.closest('button').classList.contains('editBtn')) {
-        console.log('kliknięto przycisk edit');
+        // console.log('kliknięto przycisk edit');
+        editTask(e);
     } else if (e.target.closest('button').classList.contains('deleteBtn')) {
         // console.log('kliknięto przycisk delete');
         deleteTask(e);
@@ -85,7 +95,7 @@ const checkEnter = e => {
 
 //catch elements on site
 const prepareDOMElements = () => {
-    $input = document.querySelector('input');
+    $input = document.querySelector('.add-task input');
     // console.log($input);
     $addBtn = document.querySelector('.addBtn');
     // console.log($addBtn);
@@ -93,6 +103,14 @@ const prepareDOMElements = () => {
     // console.log($info);
     $list = document.querySelector('.todo-list');
     // console.log(($list));
+    $popup = document.querySelector('.popup');
+    console.log($popup);
+    $popupInput = document.querySelector('.popup-body input');
+    console.log($popupInput);
+    $acceptBtn = document.querySelector('.accept');
+    console.log($acceptBtn);
+    $cancelBtn = document.querySelector('.cancel');
+    console.log($cancelBtn);
 };
 
 //listen events 
