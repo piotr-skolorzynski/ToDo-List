@@ -7,16 +7,39 @@ const $min = 0; //lower limit id number
 const $max = 100; //upper limit id number
 let $popup; //popup
 let $popupInput; //popup task to edit
+let $popupInfo; //info in popup
 let $acceptBtn; //popup btn to accept changes in edeited task
 let $cancelBtn; //popup btn to resign edit mode
+let $clickedTask; //edited task
 
+//accept changes in edited task
+const acceptChange = () => {
+    if ($popupInput.value === '') {
+        $popupInfo.innerHTML = 'Wpisz nową treść zadania!';
+    } else {
+    $clickedTask.innerHTML = $popupInput.value;
+    $task = $clickedTask;
+    addBtns();
+    $popup.style.display = 'none';
+    }
+};
+
+//cancel changes in edited task
+const cancelChange = () => {
+    $popup.style.display = 'none';
+};
+
+//task edition
 const editTask = e => {
     $popup.style.display = 'block';
     const clickedTaskID = e.target.closest('li').id;
     // console.log(clickedTaskID);
-    const clickedTask = document.getElementById(clickedTaskID);
+    $clickedTask = document.getElementById(clickedTaskID);
     // console.log(clickedTask);
-    $popupInput.value = clickedTask.textContent;
+    $popupInput.value = $clickedTask.textContent;
+    $acceptBtn.addEventListener('click', acceptChange);
+    $cancelBtn.addEventListener('click', cancelChange);
+    $popupInfo.innerHTML = '';
 };
 
 
@@ -109,13 +132,14 @@ const prepareDOMElements = () => {
     $list = document.querySelector('.todo-list');
     // console.log(($list));
     $popup = document.querySelector('.popup');
-    console.log($popup);
+    // console.log($popup);
+    $popupInfo = document.querySelector('.popup-warning');
     $popupInput = document.querySelector('.popup-body input');
-    console.log($popupInput);
+    // console.log($popupInput);
     $acceptBtn = document.querySelector('.accept');
-    console.log($acceptBtn);
+    // console.log($acceptBtn);
     $cancelBtn = document.querySelector('.cancel');
-    console.log($cancelBtn);
+    // console.log($cancelBtn);
 };
 
 //listen events 
