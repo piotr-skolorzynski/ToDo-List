@@ -96,6 +96,18 @@ const addBtns = () => {
     $task.appendChild(div);
 };
 
+//function adding task content to local storage
+const saveLocalTask = taskContent => {
+    let taskList;
+    if (localStorage.getItem("taskList") === null) {
+        taskList = [];
+    } else {
+        taskList = JSON.parse(localStorage.getItem("taskList"));
+    }
+    taskList.push(taskContent);
+    localStorage.setItem("taskList", JSON.stringify(taskList));
+};
+
 //function creating single task
 const addTask = () => {//adding task
     if ($input.value !== '') {
@@ -107,6 +119,8 @@ const addTask = () => {//adding task
         // console.log($task);
         addBtns();
         $list.appendChild($task);
+        // add task content to local storage
+        saveLocalTask($input.value);
         $input.value = '';
         $info.innerText = '';
     } else {
