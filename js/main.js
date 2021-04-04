@@ -109,7 +109,7 @@ const saveLocalTask = taskContent => {
 };
 
 //function creating single task
-const addTask = () => {//adding task
+const addTask = () => {
     if ($input.value !== '') {
         $task = document.createElement('li');
         $task.classList.add('list-item');
@@ -133,6 +133,26 @@ const checkEnter = e => {
     if (e.code === 'Enter') {
         addTask();
     }
+};
+
+//load saved tasks from local storage
+const getLocalTask = () => {
+    let taskList;
+    if (localStorage.getItem("taskList") === null) {
+        taskList = [];
+    } else {
+        taskList = JSON.parse(localStorage.getItem("taskList"));
+        $info.innerText = '';
+    }
+    taskList.forEach(savedTask => {
+        $task = document.createElement('li');
+        $task.classList.add('list-item');
+        $task.innerHTML = savedTask;
+        const idValue = generateID($min, $max);
+        $task.setAttribute('id', idValue);
+        addBtns();
+        $list.appendChild($task);
+    });
 };
 
 //catch elements on site
@@ -166,6 +186,7 @@ const prepareDOMEvents = () => {
 const main = () => {
     prepareDOMElements();
     prepareDOMEvents();
+    getLocalTask();
 };
 
 //start function main if site is fully loaded
