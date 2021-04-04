@@ -42,11 +42,28 @@ const editTask = e => {
     $popupInfo.innerHTML = '';
 };
 
+//function removing task from local storage
+const removeLocalTask = taskContent => {
+    let taskList;
+    if (localStorage.getItem("taskList") === null) {
+        taskList = [];
+        $info.innerText = 'Brak zadań na liście!';
+    } else {
+        taskList = JSON.parse(localStorage.getItem("taskList"));
+    }
+    const taskIndex = taskList.indexOf(taskContent);
+    // console.log(taskIndex);
+    taskList.splice(taskIndex,1);
+    // console.log(taskList);
+    localStorage.setItem("taskList", JSON.stringify(taskList));
+};
 
 //function responsible for deleting tasks
 const deleteTask = e => {
     const taskToDelete = e.target.closest('li');
+    // console.log(taskToDelete.innerText);
     taskToDelete.remove();
+    removeLocalTask(taskToDelete.innerText);
     const refreshedList = document.getElementsByClassName('list-item');
     // console.log(refreshedList.length);
     if (refreshedList.length === 0) {
@@ -101,6 +118,7 @@ const saveLocalTask = taskContent => {
     let taskList;
     if (localStorage.getItem("taskList") === null) {
         taskList = [];
+        $info.innerText = 'Brak zadań na liście!';
     } else {
         taskList = JSON.parse(localStorage.getItem("taskList"));
     }
@@ -140,19 +158,20 @@ const getLocalTask = () => {
     let taskList;
     if (localStorage.getItem("taskList") === null) {
         taskList = [];
+        $info.innerText = 'Brak zadań na liście!';
     } else {
         taskList = JSON.parse(localStorage.getItem("taskList"));
         $info.innerText = '';
+        taskList.forEach(savedTask => {
+            $task = document.createElement('li');
+            $task.classList.add('list-item');
+            $task.innerHTML = savedTask;
+            const idValue = generateID($min, $max);
+            $task.setAttribute('id', idValue);
+            addBtns();
+            $list.appendChild($task);
+        });
     }
-    taskList.forEach(savedTask => {
-        $task = document.createElement('li');
-        $task.classList.add('list-item');
-        $task.innerHTML = savedTask;
-        const idValue = generateID($min, $max);
-        $task.setAttribute('id', idValue);
-        addBtns();
-        $list.appendChild($task);
-    });
 };
 
 //catch elements on site
