@@ -12,6 +12,11 @@ let $cancelBtn; //popup btn to resign edit mode
 
 const editTask = e => {
     $popup.style.display = 'block';
+    const clickedTaskID = e.target.closest('li').id;
+    // console.log(clickedTaskID);
+    const clickedTask = document.getElementById(clickedTaskID);
+    // console.log(clickedTask);
+    $popupInput.value = clickedTask.textContent;
 };
 
 
