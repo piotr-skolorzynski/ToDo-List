@@ -12,15 +12,31 @@ let $acceptBtn; //popup btn to accept changes in edeited task
 let $cancelBtn; //popup btn to resign edit mode
 let $clickedTask; //edited task
 
+const updateLocalStorage = (oldTask, newTask) => {
+    let taskList;
+    if (localStorage.getItem("taskList") === null) {
+        taskList = [];
+        $info.innerText = 'Brak zadań na liście!';
+    } else {
+        taskList = JSON.parse(localStorage.getItem("taskList"));
+    }
+    const oldTaskIndex = taskList.indexOf(oldTask);
+    taskList.fill(newTask, oldTaskIndex, oldTaskIndex + 1);
+    localStorage.setItem("taskList", JSON.stringify(taskList));
+};
+
 //accept changes in edited task
 const acceptChange = () => {
     if ($popupInput.value === '') {
         $popupInfo.innerHTML = 'Wpisz nową treść zadania!';
     } else {
-    $clickedTask.innerHTML = $popupInput.value;
-    $task = $clickedTask;
-    addBtns();
-    $popup.style.display = 'none';
+        // $clickedTask.textContent - edited old task content
+        //$popupInput.value - edited new task content
+        updateLocalStorage($clickedTask.textContent, $popupInput.value);
+        $clickedTask.innerHTML = $popupInput.value;
+        $task = $clickedTask;
+        addBtns();
+        $popup.style.display = 'none';
     }
 };
 
