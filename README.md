@@ -1,12 +1,12 @@
 
 
-#ToDo List
+# ToDo List
 
 Another ToDo List like thousands before mine...
 
 ...but it's a small step for me ;)
 
-##Functionalities:
+## Functionalities:
 
 1. Adding task to list also after keyup enter.
 2. Saving task in local storage
