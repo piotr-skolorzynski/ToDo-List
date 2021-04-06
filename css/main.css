@@ -1,5 +1,3 @@
-/* universal style */
-
 *,
 *::after,
 *::before {
@@ -15,9 +13,6 @@ html {
 
 body {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     min-height: 100vh;
     font-family: 'Lato', sans-serif;
     background: #ccc;
@@ -26,7 +21,7 @@ body {
 /* toDo List style */
 
 .todo-header {
-    margin: 2rem;
+    margin: 2rem auto;
     padding: 2rem;
     display: flex;
     flex-direction: column;
@@ -39,8 +34,8 @@ body {
 }
 
 h1 {
-    margin: .5em;
-    padding: .5em;
+    margin: .5rem;
+    padding: 1rem;
     color: #ddd;
     font-size: 5rem;
     letter-spacing: 3px;
@@ -51,7 +46,7 @@ h1 {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .add-task input {
@@ -76,6 +71,7 @@ h1 {
 }
 
 .todo-body {
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -83,7 +79,7 @@ h1 {
     width: 800px;
     background-color: #b1adad;
     border-radius: 15px;
-    box-shadow: 2px 2px 3px #000000;
+    box-shadow: 2px 2px 5px #5e5e5e;
 }
 
 .todo-body h2 {
@@ -130,6 +126,7 @@ h1 {
 }
 
 .checkBtn {
+    background-color: #c5d7ec;
     transition: background-color .3s;
 }
 
@@ -138,6 +135,7 @@ h1 {
 }
 
 .editBtn {
+    background-color: #b8e9c7;
     transition: background-color .3s;
 }
 
@@ -146,6 +144,7 @@ h1 {
 }
 
 .deleteBtn {
+    background-color: #dda18f;
     transition: background-color .3s;
 }
 
@@ -155,7 +154,7 @@ h1 {
 
 .fas,
 .far {
-    padding: .2em;
+    padding: .25em;
 }
 
 .completed {
