@@ -1,6 +1,7 @@
 import { prepareTodoElement } from "./DOMElements.js";
 
-//function generating id number
+let tasksArray = [];
+
 const generateID = (min=0, max=1000) => {
     const id = Math.floor(Math.random() * ((max - min + 1) + min));
     return id;
@@ -14,8 +15,9 @@ export const addTask = () => {
         const task = prepareTodoElement(generateID(), input.value);
         const list = document.querySelector('[data-element="list"]');
         list.append(task)
+        tasksArray = [...tasksArray, task];
 
-        // // add task content to local storage
+        // add task content to local storage
         // saveLocalTask($input.value);
 
         input.value = '';
@@ -31,11 +33,15 @@ export const checkEnter = e => {
     }
 };
 
+const handleCheckedTodo = e => {
+    e.target.closest('li').classList.toggle('completed');
+};
+
 export const handleTodoBtns = e => {
     const elementData = e.target.dataset.element;
     switch (elementData) {
         case 'check':
-            console.log("odpalam funckję check")
+            handleCheckedTodo(e);
             break;
         case 'edit':
             console.log('odpalam funkcję edit');
