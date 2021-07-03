@@ -1,4 +1,4 @@
-import { addTask } from "./tools.js";
+import { addTask } from "./Tools.js";
 
 export const prepareDOMEvents = () => {
     const addTaskBtn = document.querySelector('[data-element="add"]');

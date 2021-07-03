@@ -11,9 +11,23 @@ export const prepareDOMElements = () => {
         <div class="todo-body">
             <h2>Lista zadań:</h2>
             <p data-element="info" class="warning">Brak zadań na liście!</p>
-            <ul class="todo-list"></ul>
+            <ul data-element="list" class="todo-list"></ul>
         </div>`;
 };
+
+export const prepareTodoElement = (id, text) => {
+        const task = document.createElement('li');
+        task.setAttribute('data-id', id);
+        task.classList.add('list-item')
+        task.innerHTML = 
+           `${text}
+                <div class="tools">
+                    <button class="btn checkBtn"><i class="fas fa-check"></i></button>
+                    <button class="btn editBtn"><i class="far fa-edit"></i></button>
+                    <button class="btn deleteBtn"><i class="far fa-trash-alt"></i></button>
+                    </div>`;
+        return task;
+}
 
 export const preparePopupElement = () => {
     const popup = document.createElement('div');
