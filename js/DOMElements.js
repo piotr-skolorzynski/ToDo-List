@@ -30,6 +30,7 @@ export const prepareTodoElement = (id, text) => {
 }
 
 export const preparePopupElement = () => {
+    const container = document.querySelector('[data-element="app"]')
     const popup = document.createElement('div');
     popup.setAttribute('data-element', 'popup');
     popup.classList.add('popup');
@@ -43,4 +44,5 @@ export const preparePopupElement = () => {
                 <button class="popup-btn cancel">Anuluj</button>
                 </div>
         </div>`;
+    container.append(popup);
 };

@@ -165,9 +165,8 @@ h1 {
 /* popup style */
 
 .popup {
-    display: none;
     position: absolute;
-    top: 50%;
+    top: 280px;
     left: 50%;
     transform: translate(-50%, -50%);
     height: 350px;

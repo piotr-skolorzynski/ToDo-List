@@ -1,4 +1,4 @@
-import { prepareTodoElement } from "./DOMElements.js";
+import { prepareTodoElement, preparePopupElement } from "./DOMElements.js";
 
 let tasksArray = [];
 
@@ -37,6 +37,11 @@ const handleCheckedTodo = e => {
     e.target.closest('li').classList.toggle('completed');
 };
 
+const handleEditTodo = e => {
+    preparePopupElement();
+
+};
+
 const handleDeleteTodo = e => {
     const todoId = e.target.closest('li').dataset.id;
     const todo = document.querySelector(`[data-id="${todoId}"]`);
@@ -51,7 +56,7 @@ export const handleTodoBtns = e => {
             handleCheckedTodo(e);
             break;
         case 'edit':
-            console.log('odpalam funkcję edit');
+            handleEditTodo(e);
             break;
         case 'delete':
             handleDeleteTodo(e);
