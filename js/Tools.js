@@ -24,3 +24,9 @@ export const addTask = () => {
         info.innerText = 'Wpisz treść zadania!';
     }
 }
+
+export const checkEnter = e => {
+    if (e.code === 'Enter') {
+        addTask();
+    }
+}
