@@ -37,6 +37,13 @@ const handleCheckedTodo = e => {
     e.target.closest('li').classList.toggle('completed');
 };
 
+const handleDeleteTodo = e => {
+    const todoId = e.target.closest('li').dataset.id;
+    const todo = document.querySelector(`[data-id="${todoId}"]`);
+    todo.remove();
+    tasksArray = tasksArray.filter(task => task.dataset.id !== todo.dataset.id)
+};
+
 export const handleTodoBtns = e => {
     const elementData = e.target.dataset.element;
     switch (elementData) {
@@ -47,7 +54,7 @@ export const handleTodoBtns = e => {
             console.log('odpalam funkcję edit');
             break;
         case 'delete':
-            console.log('odpalam funkcję delete');
+            handleDeleteTodo(e);
             break;
     }
 };
