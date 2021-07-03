@@ -4,13 +4,13 @@ export const prepareDOMElements = () => {
        `<div class="todo-header">
             <h1>ToDo List</h1>
             <div class="add-task">
-                <input type="text" placeholder="Wpisz treść zadania...">
-                <button class="addBtn">Add</button>
+                <input data-element="input" type="text" placeholder="Wpisz treść zadania...">
+                <button data-element="add" class="addBtn">Add</button>
             </div>
         </div>
         <div class="todo-body">
             <h2>Lista zadań:</h2>
-            <p class="warning">Brak zadań na liście!</p>
+            <p data-element="info" class="warning">Brak zadań na liście!</p>
             <ul class="todo-list"></ul>
         </div>`;
 };
