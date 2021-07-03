@@ -23,10 +23,25 @@ export const addTask = () => {
     } else {
         info.innerText = 'Wpisz treść zadania!';
     }
-}
+};
 
 export const checkEnter = e => {
     if (e.code === 'Enter') {
         addTask();
     }
-}
+};
+
+export const handleTodoBtns = e => {
+    const elementData = e.target.dataset.element;
+    switch (elementData) {
+        case 'check':
+            console.log("odpalam funckję check")
+            break;
+        case 'edit':
+            console.log('odpalam funkcję edit');
+            break;
+        case 'delete':
+            console.log('odpalam funkcję delete');
+            break;
+    }
+};

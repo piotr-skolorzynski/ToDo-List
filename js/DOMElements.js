@@ -22,9 +22,9 @@ export const prepareTodoElement = (id, text) => {
         task.innerHTML = 
            `${text}
                 <div class="tools">
-                    <button class="btn checkBtn"><i class="fas fa-check"></i></button>
-                    <button class="btn editBtn"><i class="far fa-edit"></i></button>
-                    <button class="btn deleteBtn"><i class="far fa-trash-alt"></i></button>
+                    <button class="btn checkBtn"><i data-element="check" class="fas fa-check"></i></button>
+                    <button class="btn editBtn"><i data-element="edit" class="far fa-edit"></i></button>
+                    <button class="btn deleteBtn"><i data-element="delete" class="far fa-trash-alt"></i></button>
                     </div>`;
         return task;
 }

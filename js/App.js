@@ -8,5 +8,4 @@ const main = () => {
     // getLocalTask();
 };
 
-//start function main if site is fully loaded
 document.addEventListener('DOMContentLoaded', main);

@@ -119,10 +119,8 @@ h1 {
 
 .btn {
     margin: 0 .2em;
-    padding: .1rem .2rem;
     border-radius: 3px;
     box-shadow: 1px 1px 2px #000000;
-    cursor: pointer;
 }
 
 .checkBtn {
@@ -154,7 +152,8 @@ h1 {
 
 .fas,
 .far {
-    padding: .25em;
+    padding: .4em;
+    cursor: pointer;
 }
 
 .completed {
