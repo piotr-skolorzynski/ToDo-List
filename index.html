@@ -4,45 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToDo List</title>
+    <title>ToDo List v2</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/c277eafce0.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/App.js" type="module" defer></script>
 </head>
 <body>
-        <div class="todo-header">
-            <h1>ToDo List</h1>
-            <div class="add-task">
-                <input type="text" placeholder="Wpisz treść zadania...">
-                <button class="addBtn">Add</button>
-            </div>
-        </div>    
-        <div class="todo-body">
-            <h2>Lista zadań:</h2>
-            <p class="warning">Brak zadań na liście!</p>
-            <ul class="todo-list">
-                <!-- task example -->
-                <!-- <li class="list-item"> Wypij kawę
-                    <div class="tools">
-                        <button class="btn checkBtn"><i class="fas fa-check"></i></button>
-                        <button class="btn editBtn"><i class="far fa-edit"></i></button>
-                        <button class="btn deleteBtn"><i class="far fa-trash-alt"></i></button>
-                    </div>
-                </li> -->
-            </ul>
-        </div>     
-        <div class="popup">
-            <h2>Edytuj zadanie:</h2>
-            <div class="popup-body">
-                <p class="popup-warning"></p>
-                <input type="text" placeholder="Wpisz nową treść zadania...">
-                <div class="btns">
-                    <button class="popup-btn accept">Zatwierdź</button>
-                    <button class="popup-btn cancel">Anuluj</button>
-                </div>
-            </div>
-        </div>
-    <script src="./js/main.js"></script>
+
+    <div data-element="app" class="app-container"></div>
+
 </body>
 </html>

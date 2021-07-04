@@ -1,8 +1,7 @@
 import { prepareTodoElement, preparePopupElement, prepareTodoContent } from "./DOMElements.js";
+import { saveTaskInLocalStorage, removeTaskFromLocalStorage, updateLocalStorage } from "./Localstorage.js";
 
-let tasksArray = [];
-
-const generateID = (min=0, max=1000) => {
+export const generateID = (min=0, max=1000) => {
     const id = Math.floor(Math.random() * ((max - min + 1) + min));
     return id;
 };
@@ -10,16 +9,11 @@ const generateID = (min=0, max=1000) => {
 export const addTask = () => {
     const input = document.querySelector('[data-element="input"]');
     const info = document.querySelector('[data-element="info"]');
-
     if (input.value !== '') {
         const task = prepareTodoElement(generateID(), input.value);
         const list = document.querySelector('[data-element="list"]');
         list.append(task)
-        tasksArray = [...tasksArray, task];
-
-        // add task content to local storage
-        // saveLocalTask($input.value);
-
+        saveTaskInLocalStorage(task.innerText);
         input.value = '';
         info.innerText = '';
     } else {
@@ -35,7 +29,6 @@ export const checkEnter = e => {
 
 const handleCheckedTodo = e => {
     e.target.closest('li').classList.toggle('completed');
-    //odświeżenie w local storage
 };
 
 const handleEditTodo = e => {
@@ -46,29 +39,24 @@ const handleEditTodo = e => {
     const popupInput = document.querySelector('[data-element="popup_input"]');
     const popupAcceptBtn = document.querySelector('[data-element="popup_accept"]');
     const popupCancelBtn = document.querySelector('[data-element="popup_cancel"]');
-
     popupInput.value = clickedTask.innerText;
-
     popupAcceptBtn.addEventListener('click', () => {
         if (popupInput.value === '') {
         popupInput.placeholder = 'Nowe zadanie musi posiadać treść!';
         } else {
-            clickedTask.innerHTML = prepareTodoContent(popupInput.value);
-            //odświeżenie tablicy tasksArray
-            //aktualizacja z local storage
+            updateLocalStorage(clickedTask.innerText, popupInput.value);
+            clickedTask.innerHTML = prepareTodoContent(popupInput.value);            
             popup.remove();
         }
     });
-
     popupCancelBtn.addEventListener('click', () => popup.remove());
 };
 
 const handleDeleteTodo = e => {
     const todoId = e.target.closest('li').dataset.id;
     const todo = document.querySelector(`[data-id="${todoId}"]`);
+    removeTaskFromLocalStorage(todo.innerText);
     todo.remove();
-    tasksArray = tasksArray.filter(task => task.dataset.id !== todo.dataset.id)
-    //odświeżenie w local storage
 };
 
 export const handleTodoBtns = e => {
