@@ -15,17 +15,20 @@ export const prepareDOMElements = () => {
         </div>`;
 };
 
-export const prepareTodoElement = (id, text) => {
-        const task = document.createElement('li');
-        task.setAttribute('data-id', id);
-        task.classList.add('list-item')
-        task.innerHTML = 
-           `${text}
+export const prepareTodoContent = text => {
+    return `${text}
                 <div class="tools">
                     <button class="btn checkBtn"><i data-element="check" class="fas fa-check"></i></button>
                     <button class="btn editBtn"><i data-element="edit" class="far fa-edit"></i></button>
                     <button class="btn deleteBtn"><i data-element="delete" class="far fa-trash-alt"></i></button>
-                    </div>`;
+                </div>`;
+}
+
+export const prepareTodoElement = (id, text) => {
+        const task = document.createElement('li');
+        task.setAttribute('data-id', id);
+        task.classList.add('list-item')
+        task.innerHTML = prepareTodoContent(text);
         return task;
 }
 
@@ -38,10 +41,10 @@ export const preparePopupElement = () => {
        `<h2>Edytuj zadanie:</h2>
         <div class="popup-body">
             <p class="popup-warning"></p>
-            <input type="text" placeholder="Wpisz nową treść zadania...">
+            <input data-element="popup_input" type="text" placeholder="Wpisz nową treść zadania...">
             <div class="btns">
-                <button class="popup-btn accept">Zatwierdź</button>
-                <button class="popup-btn cancel">Anuluj</button>
+                <button data-element="popup_accept" class="popup-btn accept">Zatwierdź</button>
+                <button data-element="popup_cancel" class="popup-btn cancel">Anuluj</button>
                 </div>
         </div>`;
     container.append(popup);
