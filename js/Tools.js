@@ -28,14 +28,25 @@ export const checkEnter = e => {
 };
 
 const handleCheckedTodo = e => {
-    e.target.closest('li').classList.toggle('completed');
+    const task = e.target.closest('li');
+    task.classList.toggle('completed');
+    if (task.dataset.isFinished === "false") {
+        task.dataset.isFinished = "true";
+    } else {
+        task.dataset.isFinished = "false";
+    }
 };
 
 const handleEditTodo = e => {
-    preparePopupElement();
-    const popup = document.querySelector('[data-element="popup"]');
     const clickedTaskId = e.target.closest('li').dataset.id;
     const clickedTask = document.querySelector(`[data-id="${clickedTaskId}"]`);
+    //block edition of finished task
+    const isFinished = clickedTask.getAttribute('data-is-finished');
+    if (isFinished === "true") {
+        return;
+    }
+    preparePopupElement();
+    const popup = document.querySelector('[data-element="popup"]');
     const popupInput = document.querySelector('[data-element="popup_input"]');
     const popupAcceptBtn = document.querySelector('[data-element="popup_accept"]');
     const popupCancelBtn = document.querySelector('[data-element="popup_cancel"]');

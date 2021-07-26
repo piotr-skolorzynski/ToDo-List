@@ -27,7 +27,11 @@ export const prepareTodoContent = text => {
 export const prepareTodoElement = (id, text) => {
         const task = document.createElement('li');
         task.setAttribute('data-id', id);
-        task.classList.add('list-item')
+       
+        // dodanie atrybutu czy jest zakończone
+        task.setAttribute('data-is-finished', false);
+
+        task.classList.add('list-item');
         task.innerHTML = prepareTodoContent(text);
         return task;
 }
