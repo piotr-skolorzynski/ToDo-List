@@ -10,7 +10,8 @@ export const addTask = () => {
     const input = document.querySelector('[data-element="input"]');
     const info = document.querySelector('[data-element="info"]');
     if (input.value !== '') {
-        const task = prepareTodoElement(generateID(), input.value);
+        const isFinished = 'false';
+        const task = prepareTodoElement(generateID(), input.value, isFinished);
         const list = document.querySelector('[data-element="list"]');
         list.append(task)
         saveTaskInLocalStorage(task.innerText);
