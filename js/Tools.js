@@ -14,7 +14,7 @@ export const addTask = () => {
         const task = prepareTodoElement(generateID(), input.value, isFinished);
         const list = document.querySelector('[data-element="list"]');
         list.append(task)
-        saveTaskInLocalStorage(task.innerText);
+        saveTaskInLocalStorage(task.innerText, isFinished);
         input.value = '';
         info.innerText = '';
     } else {
@@ -33,8 +33,10 @@ const handleCheckedTodo = e => {
     task.classList.toggle('completed');
     if (task.dataset.isFinished === "false") {
         task.dataset.isFinished = "true";
+        updateLocalStorage(task.innerText, task.innerText, task.dataset.isFinished)
     } else {
         task.dataset.isFinished = "false";
+        updateLocalStorage(task.innerText, task.innerText, task.dataset.isFinished)
     }
 };
 

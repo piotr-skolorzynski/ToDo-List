@@ -6,7 +6,7 @@ import { firebaseConfig } from "./Firebase.config.js";
 const main = () => {
     prepareDOMElements();
     prepareDOMEvents();
-    // loadTasksFromLocalStorage();
+    loadTasksFromLocalStorage();
     // firebase.initializeApp(firebaseConfig);
 };
 

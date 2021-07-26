@@ -11,14 +11,14 @@ export const loadTasksFromLocalStorage = () => {
         taskList = JSON.parse(localStorage.getItem("taskList"));
         info.innerText = '';
         taskList.forEach(savedTask => {
-            const task = prepareTodoElement(generateID(), savedTask);
+            const task = prepareTodoElement(generateID(), savedTask.content, savedTask.isFinished);
             const list = document.querySelector('[data-element="list"]');
             list.append(task);
         });
     }
 };
 
-export const saveTaskInLocalStorage = taskContent => {
+export const saveTaskInLocalStorage = (taskContent, taskStatus) => {
     let taskList;
     const info = document.querySelector('[data-element="info"]');
     if (localStorage.getItem("taskList") === null) {
@@ -27,11 +27,15 @@ export const saveTaskInLocalStorage = taskContent => {
     } else {
         taskList = JSON.parse(localStorage.getItem("taskList"));
     }
-    taskList = [...taskList, taskContent];
+    let newTask = {
+        content: taskContent,
+        isFinished: taskStatus
+    }
+    taskList = [...taskList, newTask];
     localStorage.setItem("taskList", JSON.stringify(taskList));
 };
 
-export const updateLocalStorage = (oldTaskContent, newTaskContent) => {
+export const updateLocalStorage = (oldTaskContent, newTaskContent, taskStatus) => {
     let taskList;
     const info = document.querySelector('[data-element="info"]');
     if (localStorage.getItem("taskList") === null) {
@@ -40,8 +44,15 @@ export const updateLocalStorage = (oldTaskContent, newTaskContent) => {
     } else {
         taskList = JSON.parse(localStorage.getItem("taskList"));
     }
+
+    //szukanie obiektu w tablicy obiektów
+
     const oldTaskIndex = taskList.indexOf(oldTaskContent);
-    taskList.fill(newTaskContent, oldTaskIndex, oldTaskIndex + 1);
+    let newTask = {
+        content: newTaskContent,
+        isFinished: taskStatus
+    }
+    taskList.fill(newTask, oldTaskIndex, oldTaskIndex + 1);
     localStorage.setItem("taskList", JSON.stringify(taskList));
 };
 
