@@ -44,7 +44,7 @@ const handleEditTodo = e => {
     const clickedTaskId = e.target.closest('li').dataset.id;
     const clickedTask = document.querySelector(`[data-id="${clickedTaskId}"]`);
     //block edition of finished task
-    const isFinished = clickedTask.getAttribute('data-is-finished');
+    const isFinished = clickedTask.dataset.isFinished;
     if (isFinished === "true") {
         return;
     }
@@ -58,7 +58,7 @@ const handleEditTodo = e => {
         if (popupInput.value === '') {
         popupInput.placeholder = 'Nowe zadanie musi posiadać treść!';
         } else {
-            updateLocalStorage(clickedTask.innerText, popupInput.value);
+            updateLocalStorage(clickedTask.innerText, popupInput.value, isFinished);
             clickedTask.innerHTML = prepareTodoContent(popupInput.value);            
             popup.remove();
         }

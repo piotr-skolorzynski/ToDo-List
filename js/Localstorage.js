@@ -45,14 +45,13 @@ export const updateLocalStorage = (oldTaskContent, newTaskContent, taskStatus) =
         taskList = JSON.parse(localStorage.getItem("taskList"));
     }
 
-    //szukanie obiektu w tablicy obiektów
-
     const oldTaskIndex = taskList.indexOf(oldTaskContent);
-    let newTask = {
+
+    const newTask = {
         content: newTaskContent,
         isFinished: taskStatus
     }
-    taskList.fill(newTask, oldTaskIndex, oldTaskIndex + 1);
+    taskList.splice(oldTaskIndex, 1, newTask);
     localStorage.setItem("taskList", JSON.stringify(taskList));
 };
 
