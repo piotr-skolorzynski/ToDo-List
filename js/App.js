@@ -1,13 +1,9 @@
-import { prepareDOMElements } from "./DOMElements.js";
-import { prepareDOMEvents } from "./DOMEvents.js";
-import { loadTasksFromLocalStorage } from "./Localstorage.js";
-import { firebaseConfig } from "./Firebase.config.js";
+import { createStartingInfo } from "./DOMElements.js";
+import { chooseStorageForm } from "./DOMEvents.js";
 
 const main = () => {
-    prepareDOMElements();
-    prepareDOMEvents();
-    loadTasksFromLocalStorage();
-    // firebase.initializeApp(firebaseConfig);
+    createStartingInfo();
+    chooseStorageForm();
 };
 
 document.addEventListener('DOMContentLoaded', main);

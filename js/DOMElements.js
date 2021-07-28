@@ -1,3 +1,21 @@
+export const createStartingInfo = () => {
+    const container = document.querySelector('[data-element="app"]')
+    const popup = document.createElement('div');
+    popup.setAttribute('data-element', 'popup_info');
+    popup.classList.add('popup');
+    popup.innerHTML = 
+       `<h2>wybierz miejsce przechowywania swoich zadań:</h2>
+        <div class="popup-body">
+            <p class="warning">Firebase - usługa Google, umożliwia dostęp do swoich zadań niezależnie od miejsca. Potrzebujesz jedynie dostępu do internetu i przeglądarki.</p>
+            <p class="warning"> Local Storage umożliwia jedynie zapisanie zadań w przeglądarce na której aktualnie pracujesz!</p>
+            <div class="btns">
+                <button data-element="popup_firebase" class="popup-btn accept">Firebase</button>
+                <button data-element="popup_storage" class="popup-btn cancel">Local Storage</button>
+            </div>
+        </div>`;
+    container.append(popup);
+};
+
 export const prepareDOMElements = () => {
     const app = document.querySelector('[data-element="app"]');
     app.innerHTML = 

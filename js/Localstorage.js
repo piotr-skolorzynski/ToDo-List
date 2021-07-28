@@ -44,9 +44,7 @@ export const updateLocalStorage = (oldTaskContent, newTaskContent, taskStatus) =
     } else {
         taskList = JSON.parse(localStorage.getItem("taskList"));
     }
-
     const oldTaskIndex = taskList.indexOf(oldTaskContent);
-
     const newTask = {
         content: newTaskContent,
         isFinished: taskStatus

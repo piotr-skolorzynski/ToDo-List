@@ -2,8 +2,7 @@ import { prepareTodoElement, preparePopupElement, prepareTodoContent } from "./D
 import { saveTaskInLocalStorage, removeTaskFromLocalStorage, updateLocalStorage } from "./Localstorage.js";
 
 export const generateID = (min=0, max=1000) => {
-    const id = Math.floor(Math.random() * ((max - min + 1) + min));
-    return id;
+    return Math.floor(Math.random() * ((max - min + 1) + min));
 };
 
 export const addTask = () => {
