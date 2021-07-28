@@ -1,7 +1,7 @@
 import { addTask, checkEnter, handleTodoBtns } from "./Tools.js";
 import { prepareDOMElements } from "./DOMElements.js";
 import { loadTasksFromLocalStorage } from "./Localstorage.js";
-import { firebaseConfig } from "./Firebase.config.js";
+import { renderTasksFromFirestore } from "./Firebase/Firestore.js";
 
 export const prepareDOMEvents = () => {
     const addTaskBtn = document.querySelector('[data-element="add"]');
@@ -17,9 +17,10 @@ export const chooseStorageForm = () => {
     const localStorage = document.querySelector('[data-element="popup_storage"]');
     const popup = document.querySelector('[data-element="popup_info"]');
     firebase.addEventListener('click', () => {
-        console.log('kliknieto firebase');
         popup.remove();
-        // firebase.initializeApp(firebaseConfig)
+        prepareDOMElements();
+        prepareDOMEvents();
+        renderTasksFromFirestore();
     });
     localStorage.addEventListener('click', () => {
         popup.remove();
