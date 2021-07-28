@@ -45,8 +45,11 @@ export const prepareTodoContent = text => {
 export const prepareTodoElement = (id, text, isFinished) => {
         const task = document.createElement('li');
         task.setAttribute('data-id', id);      
-        task.setAttribute('data-is-finished', `${isFinished}`);
+        task.setAttribute('data-is-finished', isFinished);
         task.classList.add('list-item');
+        if(isFinished === 'true') {
+            task.classList.add('completed');
+        }
         task.innerHTML = prepareTodoContent(text);
         return task;
 }
