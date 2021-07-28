@@ -10,10 +10,11 @@ export const addTask = () => {
     const info = document.querySelector('[data-element="info"]');
     if (input.value !== '') {
         const isFinished = 'false';
-        const task = prepareTodoElement(generateID(), input.value, isFinished);
+        const id = generateID();
+        const task = prepareTodoElement(id, input.value, isFinished);
         const list = document.querySelector('[data-element="list"]');
         list.append(task)
-        saveTaskInLocalStorage(task.innerText, isFinished);
+        saveTaskInLocalStorage(id, task.innerText, isFinished);
         input.value = '';
         info.innerText = '';
     } else {
@@ -32,15 +33,15 @@ const handleCheckedTodo = e => {
     task.classList.toggle('completed');
     if (task.dataset.isFinished === "false") {
         task.dataset.isFinished = "true";
-        updateLocalStorage(task.innerText, task.innerText, task.dataset.isFinished)
+        updateLocalStorage(Number(task.dataset.id), task.innerText, task.dataset.isFinished);
     } else {
         task.dataset.isFinished = "false";
-        updateLocalStorage(task.innerText, task.innerText, task.dataset.isFinished)
+        updateLocalStorage(Number(task.dataset.id), task.innerText, task.dataset.isFinished);
     }
 };
 
 const handleEditTodo = e => {
-    const clickedTaskId = e.target.closest('li').dataset.id;
+    const clickedTaskId = Number(e.target.closest('li').dataset.id);
     const clickedTask = document.querySelector(`[data-id="${clickedTaskId}"]`);
     //block edition of finished task
     const isFinished = clickedTask.dataset.isFinished;
@@ -57,7 +58,7 @@ const handleEditTodo = e => {
         if (popupInput.value === '') {
         popupInput.placeholder = 'Nowe zadanie musi posiadać treść!';
         } else {
-            updateLocalStorage(clickedTask.innerText, popupInput.value, isFinished);
+            updateLocalStorage(clickedTaskId, popupInput.value, isFinished);
             clickedTask.innerHTML = prepareTodoContent(popupInput.value);            
             popup.remove();
         }
@@ -66,9 +67,9 @@ const handleEditTodo = e => {
 };
 
 const handleDeleteTodo = e => {
-    const todoId = e.target.closest('li').dataset.id;
+    const todoId = Number(e.target.closest('li').dataset.id);
     const todo = document.querySelector(`[data-id="${todoId}"]`);
-    removeTaskFromLocalStorage(todo.innerText);
+    removeTaskFromLocalStorage(todoId);
     todo.remove();
 };
 

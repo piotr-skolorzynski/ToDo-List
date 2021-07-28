@@ -1,5 +1,3 @@
-
-
 # ToDo List
 
 Another ToDo List like thousands before mine...
