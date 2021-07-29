@@ -23,7 +23,11 @@ const registerUser = e => {
     e.preventDefault();
     const email = document.querySelector('#signup-email').value;
     const password = document.querySelector('#signup-password').value;
-
+    const auth = firebase.auth();
+    auth.createUserWithEmailAndPassword(email, password).then(credential => {
+        const signUpModal = document.querySelector('[data-element="modal-signup"]');
+        signUpModal.remove();
+    })
 }
 
 const signUpUser = () => {
