@@ -18,6 +18,37 @@ body {
     background: #ccc;
 }
 
+/*firebase styles*/
+
+.hide {
+    visibility: hidden;
+}
+
+.todo-nav {
+    margin: 1rem;
+    margin-left: auto;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+}
+
+.nav-link {
+    margin: 0 1rem;
+    padding: 0.5rem;
+    font-size: 1.7rem;
+    text-decoration: none;
+    color: #fff;
+    transition: color .3s;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+    color: #81afe4;
+}
+
 /* toDo List style */
 
 .todo-header {

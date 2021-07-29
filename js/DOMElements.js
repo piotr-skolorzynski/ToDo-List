@@ -19,7 +19,7 @@ export const createStartingInfo = () => {
 export const prepareDOMElements = () => {
     const app = document.querySelector('[data-element="app"]');
     app.innerHTML = 
-       `<div class="todo-header">
+       `<div data-element="header" class="todo-header">
             <h1>ToDo List</h1>
             <div class="add-task">
                 <input data-element="input" type="text" placeholder="Wpisz treść zadania...">

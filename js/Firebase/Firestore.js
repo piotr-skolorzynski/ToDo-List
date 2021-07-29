@@ -26,8 +26,8 @@ export const renderTasksFromFirestore = () => {
     db.settings({ timestampsInSnapshots: true });
     db.collection('tasks').get().then(snapshot => {
         console.log(snapshot.docs)
-        //snapshot.size - pokazuje rozmiar pobranej kolekcji, dobre dla małych kolekcji przy dużych powyżej 1000 się mysli, wydłuża pracę z kolekcją i podraża temat przy większych kolekcjach także ostrożnie, są lepsze rozwiązania tutaj powinno wystarczyć
-        if(snapshot.size > 0) {
+        //snapshot.size - pokazuje rozmiar pobranej kolekcji, dobre dla małych kolekcji przy dużych powyżej 1000 się myli, wydłuża pracę z kolekcją i podraża temat przy większych kolekcjach także ostrożnie, są lepsze rozwiązania tutaj powinno wystarczyć
+        if (snapshot.size > 0) {
             info.innerText = '';
         }
         snapshot.docs.forEach(doc => renderTodo(doc));
