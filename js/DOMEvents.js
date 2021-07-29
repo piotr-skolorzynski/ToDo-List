@@ -21,7 +21,7 @@ export const chooseStorageForm = () => {
         popup.remove();
         prepareDOMElements();
         renderUserNav();
-        renderTasksFromFirestore();
+        // renderTasksFromFirestore();
     });
     localStorage.addEventListener('click', () => {
         popup.remove();
