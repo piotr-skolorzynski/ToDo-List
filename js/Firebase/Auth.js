@@ -19,3 +19,7 @@ export const renderUserNav = () => {
     const todoHeader = document.querySelector('[data-element="header"]');
     todoHeader.insertAdjacentElement('afterbegin', nav);
 }
+
+export const makeAuthReference = () => {
+    const auth = firebase.auth();
+}
