@@ -12,8 +12,6 @@ const listenForAuthChanges = () => {
                 signedInElements.forEach(el => el.style.display = 'block');
                 signedOutElements.forEach(el => el.style.display = 'none');
                 firebase.firestore()
-                    .settings({ timestampsInSnapshots: true });
-                firebase.firestore()
                     .collection('tasks')
                     .onSnapshot(snapshot => {
                         info.innerHTML = '';
@@ -111,10 +109,22 @@ const signInUser = () => {
     });
 }
 
-const signOutUser = e => {
-    e.preventDefault();
-    firebase.auth()
-        .signOut();
+const signOutUser = () => {
+    firebase.auth().signOut();
+}
+
+const createAccountModal = () => {
+    const div = document.createElement('div');
+    div.setAttribute('data-element', 'modal-account');
+    div.classList.add('popup');
+    div.innerHTML = `<h2>Account details</h2>
+                    <div class="account-details"></div>`;;
+    const appContainer = document.querySelector('[data-element="app"]');
+    appContainer.append(div);
+}
+
+const showAccountDetails = () => {
+    createAccountModal();
 }
 
 const setListeners = () => {
@@ -123,7 +133,9 @@ const setListeners = () => {
     const signIn = document.querySelector('[data-element="sign-in"]');
     signIn.addEventListener('click', signInUser);
     const signOut = document.querySelector('[data-element="sign-out"]');
-    signOut.addEventListener('click', e => signOutUser(e));
+    signOut.addEventListener('click', signOutUser);
+    const account = document.querySelector('[data-element="account"]');
+    account.addEventListener('click', showAccountDetails);
     listenForAuthChanges();
 }
 

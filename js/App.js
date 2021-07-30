@@ -7,6 +7,8 @@ const main = () => {
     chooseStorageForm();
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
+    firebase.firestore()
+        .settings({ timestampsInSnapshots: true });
 };
 
 document.addEventListener('DOMContentLoaded', main);
