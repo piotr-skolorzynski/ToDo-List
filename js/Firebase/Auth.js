@@ -5,14 +5,14 @@ const listenForAuthChanges = () => {
             const signedOutElements = document.querySelectorAll('[data-element="signed-out"]');
             if (user) {
                 console.log('user logged in:', user) // do usunięcia
-                signedInElements.forEach(el => el.classList.remove('hide'));
-                signedOutElements.forEach(el => el.classList.add('hide'));
+                signedInElements.forEach(el => el.style.display = 'block');
+                signedOutElements.forEach(el => el.style.display = 'none');
             } else {
                 console.log('user logged out') // do usuniecia
-                signedInElements.forEach(el => el.classList.add('hide'));
-                signedOutElements.forEach(el => el.classList.remove('hide'));
+                signedInElements.forEach(el => el.style.display = 'none');
+                signedOutElements.forEach(el => el.style.display = 'block');
             }
-        })
+        });
 }
 
 const createSignUpModal = () => {
@@ -118,16 +118,16 @@ export const renderUserNav = () => {
     const nav = document.createElement('nav');
     nav.classList.add('todo-nav');
     const html = `<div data-element="nav-container" class="nav-container">
-                        <li data-element="signed-in" class="hide">
+                        <li data-element="signed-in" style="display:none;">
                             <a href="#" class="nav-link" data-element="account">Account</a>
                         </li>
-                        <li data-element="signed-in" class="hide">
+                        <li data-element="signed-in" style="display:none;">
                             <a href="#" class="nav-link" data-element="sign-out">Sign Out</a>
                         </li>
-                        <li data-element="signed-out">
+                        <li data-element="signed-out" style="display:none;">
                             <a href="#" class="nav-link" data-element="sign-in">Sign In</a>
                         </li>
-                        <li data-element="signed-out">
+                        <li data-element="signed-out" style="display:none;">
                             <a href="#" class="nav-link" data-element="sign-up">Sign Up</a>
                         </li>
                 </div>`;
