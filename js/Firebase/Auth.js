@@ -1,16 +1,30 @@
+import { renderTasksFromFirestore } from "./Firestore.js";
+
 const listenForAuthChanges = () => {
+    const signedInElements = document.querySelectorAll('[data-element="signed-in"]');
+    const signedOutElements = document.querySelectorAll('[data-element="signed-out"]');
+    const info = document.querySelector('[data-element="info"]');
+    const list = document.querySelector('[data-element="list"]');
     firebase.auth()
         .onAuthStateChanged(user => {
-            const signedInElements = document.querySelectorAll('[data-element="signed-in"]');
-            const signedOutElements = document.querySelectorAll('[data-element="signed-out"]');
             if (user) {
                 console.log('user logged in:', user) // do usunięcia
                 signedInElements.forEach(el => el.style.display = 'block');
                 signedOutElements.forEach(el => el.style.display = 'none');
+                firebase.firestore()
+                    .settings({ timestampsInSnapshots: true });
+                firebase.firestore()
+                    .collection('tasks')
+                    .onSnapshot(snapshot => {
+                        info.innerHTML = '';
+                        renderTasksFromFirestore(snapshot, user);
+                    });                       
             } else {
                 console.log('user logged out') // do usuniecia
                 signedInElements.forEach(el => el.style.display = 'none');
                 signedOutElements.forEach(el => el.style.display = 'block');
+                info.textContent = 'Brak zadań na liście!';
+                list.innerHTML = '';
             }
         });
 }
@@ -111,7 +125,6 @@ const setListeners = () => {
     const signOut = document.querySelector('[data-element="sign-out"]');
     signOut.addEventListener('click', e => signOutUser(e));
     listenForAuthChanges();
-    //listenForFirestoreChanges();
 }
 
 export const renderUserNav = () => {
@@ -134,6 +147,5 @@ export const renderUserNav = () => {
     nav.innerHTML = html;
     const todoHeader = document.querySelector('[data-element="header"]');
     todoHeader.insertAdjacentElement('afterbegin', nav);
-
     setListeners();
 }

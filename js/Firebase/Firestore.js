@@ -1,5 +1,3 @@
-//export const listenForFirestoreChanges = () => {}   
-
 const createTodoBtns = text => {
     return `${text}
             <div class="tools">
@@ -9,29 +7,18 @@ const createTodoBtns = text => {
             </div>`;
 }
 
-const renderTodo = doc => {
-    const todoList = document.querySelector('[data-element="list"]');
-    const li = document.createElement('li');
-    li.setAttribute('data-id', `${doc.id}`);
-    li.setAttribute('data-is-finished', `${doc.data().done}`);
-    li.classList.add('list-item');
-    if (doc.data().done === true) {
-        li.classList.add('completed');
-    }
-    li.innerHTML = createTodoBtns(doc.data().content);
-    todoList.appendChild(li);
-}
-
-export const renderTasksFromFirestore = () => {
-    const info = document.querySelector('[data-element="info"]');
-    const db = firebase.firestore();
-    db.settings({ timestampsInSnapshots: true });
-    db.collection('tasks').get().then(snapshot => {
-        console.log(snapshot.docs)
-        //snapshot.size - pokazuje rozmiar pobranej kolekcji, dobre dla małych kolekcji przy dużych powyżej 1000 się myli, wydłuża pracę z kolekcją i podraża temat przy większych kolekcjach także ostrożnie, są lepsze rozwiązania tutaj powinno wystarczyć
-        if (snapshot.size > 0) {
-            info.innerText = '';
+export const renderTasksFromFirestore = (snapshot, user) => {
+    const filteredTaskList = snapshot.docs.filter(doc => doc.data().user === user.uid);    
+    filteredTaskList.forEach(doc => {
+        const todoList = document.querySelector('[data-element="list"]');
+        const li = document.createElement('li');
+        li.setAttribute('data-id', `${doc.id}`);
+        li.setAttribute('data-is-finished', `${doc.data().done}`);
+        li.classList.add('list-item');
+        if (doc.data().done === true) {
+            li.classList.add('completed');
         }
-        snapshot.docs.forEach(doc => renderTodo(doc));
+        li.innerHTML = createTodoBtns(doc.data().content);
+        todoList.appendChild(li);
     });
 }
