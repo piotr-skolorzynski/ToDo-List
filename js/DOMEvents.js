@@ -1,7 +1,6 @@
 import { addTask, checkEnter, handleTodoBtns } from "./Tools.js";
 import { prepareDOMElements } from "./DOMElements.js";
 import { loadTasksFromLocalStorage } from "./Localstorage.js";
-import { renderTasksFromFirestore } from "./Firebase/Firestore.js";
 import { renderUserNav } from "./Firebase/Auth.js";
 
 export const prepareDOMEvents = () => {
@@ -18,10 +17,9 @@ export const chooseStorageForm = () => {
     const localStorage = document.querySelector('[data-element="popup_storage"]');
     const popup = document.querySelector('[data-element="popup_info"]');
     firebase.addEventListener('click', () => {
-        popup.remove();
         prepareDOMElements();
         renderUserNav();
-        // renderTasksFromFirestore();
+        popup.remove();
     });
     localStorage.addEventListener('click', () => {
         popup.remove();
