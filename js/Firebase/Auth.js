@@ -1,3 +1,20 @@
+const listenForAuthChanges = () => {
+    firebase.auth()
+        .onAuthStateChanged(user => {
+            const signedInElements = document.querySelectorAll('[data-element="signed-in"]');
+            const signedOutElements = document.querySelectorAll('[data-element="signed-out"]');
+            if (user) {
+                console.log('user logged in:', user) // do usunięcia
+                signedInElements.forEach(el => el.classList.remove('hide'));
+                signedOutElements.forEach(el => el.classList.add('hide'));
+            } else {
+                console.log('user logged out') // do usuniecia
+                signedInElements.forEach(el => el.classList.add('hide'));
+                signedOutElements.forEach(el => el.classList.remove('hide'));
+            }
+        })
+}
+
 const createSignUpModal = () => {
     const div = document.createElement('div');
     div.setAttribute('data-element', 'modal-signup');
@@ -31,15 +48,14 @@ const signUpUser = () => {
         .then(credential => {
             const signUpModal = document.querySelector('[data-element="modal-signup"]');
             signUpModal.remove();
-            console.log(credential.user) //do usunięcia
             firebase.auth()
                 .signOut()
                 .then(() => {
-                console.log('user signed out')
                 const info = document.querySelector('[data-element="info"]');
                 info.textContent = 'Aby rozpocząć pracę z aplikacją zaloguj się';        
             });     
         })
+        .catch(err => console.log('sth went wrong', err.message));
     });
 }
 
@@ -71,16 +87,31 @@ const signInUser = () => {
         e.preventDefault();
         const email = signInForm['signin-email'].value;
         const password = signInForm['signin-password'].value;
-        console.log(email, password); //do usunięcia
         firebase.auth()
             .signInWithEmailAndPassword(email, password)
             .then(credential => {
                 const signInModal = document.querySelector('[data-element="modal-signin"]');
                 signInModal.remove();
-                console.log('user signed in') //do usunięcia
-                console.log(credential.user); //do usunięcia
             })
+            .catch(err => console.log('sth went wrong', err.message));
     });
+}
+
+const signOutUser = e => {
+    e.preventDefault();
+    firebase.auth()
+        .signOut();
+}
+
+const setListeners = () => {
+    const signUp = document.querySelector('[data-element="sign-up"]');
+    signUp.addEventListener('click', signUpUser);
+    const signIn = document.querySelector('[data-element="sign-in"]');
+    signIn.addEventListener('click', signInUser);
+    const signOut = document.querySelector('[data-element="sign-out"]');
+    signOut.addEventListener('click', e => signOutUser(e));
+    listenForAuthChanges();
+    //listenForFirestoreChanges();
 }
 
 export const renderUserNav = () => {
@@ -103,8 +134,6 @@ export const renderUserNav = () => {
     nav.innerHTML = html;
     const todoHeader = document.querySelector('[data-element="header"]');
     todoHeader.insertAdjacentElement('afterbegin', nav);
-    const signUp = document.querySelector('[data-element="sign-up"]');
-    signUp.addEventListener('click', signUpUser);
-    const signIn = document.querySelector('[data-element="sign-in"]');
-    signIn.addEventListener('click', signInUser);
+
+    setListeners();
 }

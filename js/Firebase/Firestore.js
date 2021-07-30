@@ -1,3 +1,5 @@
+//export const listenForFirestoreChanges = () => {}   
+
 const createTodoBtns = text => {
     return `${text}
             <div class="tools">
