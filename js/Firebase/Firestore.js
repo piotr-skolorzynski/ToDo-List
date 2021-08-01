@@ -21,25 +21,38 @@ export const addTaskToFirestore = () => {
         });
 }
 
-const deleteTask = e => {
-    const taskId = e.target.closest('li').getAttribute('data-id');
+const changeTaskStatus = id => {
+    const task = document.querySelector(`[data-id="${id}"]`);
+    let taskStatus = task.getAttribute('data-is-finished');
+    if (taskStatus === 'true') taskStatus = false;
+    if (taskStatus === 'false') taskStatus = true;
     firebase.firestore()
         .collection('tasks')
-        .doc(taskId)
+        .doc(id)
+        .update({
+            done: taskStatus
+        })
+}
+
+const deleteTask = id => {
+    firebase.firestore()
+        .collection('tasks')
+        .doc(id)
         .delete();
 }
 
 const handleUserRequests = e => {
     const request = e.target.dataset.element;
+    const taskId = e.target.closest('li').getAttribute('data-id');
     switch (request) {
         case 'check':
-            changeTaskStatus(e);
+            changeTaskStatus(taskId);
             break;
         case 'edit':
-            changeTaskContent(e)
+            changeTaskContent(taskId)
             break;
         case 'delete':
-            deleteTask(e);
+            deleteTask(taskId);
             break;
     }
 }
