@@ -23,9 +23,7 @@ export const addTask = () => {
 };
 
 export const checkEnter = e => {
-    if (e.code === 'Enter') {
-        addTask();
-    }
+    if (e.code === 'Enter') addTask();
 };
 
 const handleCheckedTodo = e => {

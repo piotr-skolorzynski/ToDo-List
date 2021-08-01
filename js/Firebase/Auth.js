@@ -1,4 +1,4 @@
-import { renderTasksFromFirestore } from "./Firestore.js";
+import { renderTasksFromFirestore, addTaskToFirestore } from "./Firestore.js";
 
 const createSignUpModal = () => {
     const div = document.createElement('div');
@@ -112,7 +112,7 @@ const listenForAuthChanges = () => {
     firebase.auth()
     .onAuthStateChanged(user => {
         if (user) {
-                console.log('user logged in:', user.email) // do usunięcia
+                console.log('user logged in:', user.email, user.uid) // do usunięcia
                 signedInElements.forEach(el => el.style.display = 'block');
                 signedOutElements.forEach(el => el.style.display = 'none');
                 createAccountModal(user);
@@ -121,12 +121,12 @@ const listenForAuthChanges = () => {
                 .onSnapshot(snapshot => {
                     info.innerHTML = '';
                     renderTasksFromFirestore(snapshot, user);
-                });
+                }, err => console.log(err.message)); //przy onsnapshot nie ma catch ale error jest jako drugi parametr
             } else {
                 console.log('user logged out') // do usuniecia
                 signedInElements.forEach(el => el.style.display = 'none');
                 signedOutElements.forEach(el => el.style.display = 'block');
-                info.textContent = 'Brak zadań na liście!';
+                info.textContent = 'Sign Up or sign in to start!';
                 list.innerHTML = '';
             }
         });
@@ -140,7 +140,13 @@ const listenForAuthChanges = () => {
         const signOut = document.querySelector('[data-element="sign-out"]');
         signOut.addEventListener('click', signOutUser);
         const account = document.querySelector('[data-element="account"]');
-        account.addEventListener('click', showAccountDetails);                    
+        account.addEventListener('click', showAccountDetails);
+        const addBtn = document.querySelector('[data-element="add"]');
+        addBtn.addEventListener('click', addTaskToFirestore);
+        const input = document.querySelector('[data-element="input"]');
+        input.addEventListener('keyup', e => {
+            if (e.code === 'Enter') addTaskToFirestore();
+        });                    
         listenForAuthChanges();   
 }
 

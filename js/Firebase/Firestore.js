@@ -1,3 +1,26 @@
+export const addTaskToFirestore = () => {
+    const input = document.querySelector('[data-element="input"]');
+    const info = document.querySelector('[data-element="info"]')
+    firebase.auth()
+    .onAuthStateChanged(user => {
+        if (user && input.value !== '') {
+                firebase.firestore()
+                    .collection('tasks')
+                    .add({
+                        content: input.value,
+                        done: false,
+                        user: user.uid
+                    })
+                info.textContent = '';
+                input.value = '';
+            } else {
+                info.textContent = 'Sign Up or sign in to start!';
+                list.innerHTML = '';
+                input.value = '';
+            }
+        });
+}
+
 const createTodoBtns = text => {
     return `${text}
             <div class="tools">
@@ -9,8 +32,9 @@ const createTodoBtns = text => {
 
 export const renderTasksFromFirestore = (snapshot, user) => {
     const filteredTaskList = snapshot.docs.filter(doc => doc.data().user === user.uid);    
+    const todoList = document.querySelector('[data-element="list"]');
+    todoList.innerHTML = '';
     filteredTaskList.forEach(doc => {
-        const todoList = document.querySelector('[data-element="list"]');
         const li = document.createElement('li');
         li.setAttribute('data-id', `${doc.id}`);
         li.setAttribute('data-is-finished', `${doc.data().done}`);
@@ -21,4 +45,5 @@ export const renderTasksFromFirestore = (snapshot, user) => {
         li.innerHTML = createTodoBtns(doc.data().content);
         todoList.appendChild(li);
     });
+    // todoList.addEventListener('click', handleUserRequests);
 }
