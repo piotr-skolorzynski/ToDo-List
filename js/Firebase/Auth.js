@@ -118,9 +118,10 @@ const listenForAuthChanges = () => {
                 createAccountModal(user);
                 firebase.firestore()
                 .collection('tasks')
+                .where('user', '==', user.uid) //query to filter tasks belonging to signed in user
                 .onSnapshot(snapshot => {
                     info.innerHTML = '';
-                    renderTasksFromFirestore(snapshot, user);
+                    renderTasksFromFirestore(snapshot);
                 }, err => console.log(err.message)); //przy onsnapshot nie ma catch ale error jest jako drugi parametr
             } else {
                 console.log('user logged out') // do usuniecia

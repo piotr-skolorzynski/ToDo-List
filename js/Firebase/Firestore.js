@@ -53,11 +53,10 @@ const createTodoBtns = text => {
             </div>`;
 }
 
-export const renderTasksFromFirestore = (snapshot, user) => {
-    const filteredTaskList = snapshot.docs.filter(doc => doc.data().user === user.uid);    
+export const renderTasksFromFirestore = snapshot => {   
     const todoList = document.querySelector('[data-element="list"]');
     todoList.innerHTML = '';
-    filteredTaskList.forEach(doc => {
+    snapshot.docs.forEach(doc => {
         const li = document.createElement('li');
         li.setAttribute('data-id', `${doc.id}`);
         li.setAttribute('data-is-finished', `${doc.data().done}`);
