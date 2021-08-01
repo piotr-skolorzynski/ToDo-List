@@ -1,32 +1,5 @@
 import { renderTasksFromFirestore } from "./Firestore.js";
 
-const listenForAuthChanges = () => {
-    const signedInElements = document.querySelectorAll('[data-element="signed-in"]');
-    const signedOutElements = document.querySelectorAll('[data-element="signed-out"]');
-    const info = document.querySelector('[data-element="info"]');
-    const list = document.querySelector('[data-element="list"]');
-    firebase.auth()
-        .onAuthStateChanged(user => {
-            if (user) {
-                console.log('user logged in:', user) // do usunięcia
-                signedInElements.forEach(el => el.style.display = 'block');
-                signedOutElements.forEach(el => el.style.display = 'none');
-                firebase.firestore()
-                    .collection('tasks')
-                    .onSnapshot(snapshot => {
-                        info.innerHTML = '';
-                        renderTasksFromFirestore(snapshot, user);
-                    });                       
-            } else {
-                console.log('user logged out') // do usuniecia
-                signedInElements.forEach(el => el.style.display = 'none');
-                signedOutElements.forEach(el => el.style.display = 'block');
-                info.textContent = 'Brak zadań na liście!';
-                list.innerHTML = '';
-            }
-        });
-}
-
 const createSignUpModal = () => {
     const div = document.createElement('div');
     div.setAttribute('data-element', 'modal-signup');
@@ -113,30 +86,62 @@ const signOutUser = () => {
     firebase.auth().signOut();
 }
 
-const createAccountModal = () => {
+const createAccountModal = user => {
     const div = document.createElement('div');
     div.setAttribute('data-element', 'modal-account');
     div.classList.add('popup');
+    div.style.display = 'none';
     div.innerHTML = `<h2>Account details</h2>
-                    <div class="account-details"></div>`;;
+                    <div data-element="account-details" class="account-details">
+                        <div>Signed in as ${user.email}</div>
+                    </div>`;;
     const appContainer = document.querySelector('[data-element="app"]');
     appContainer.append(div);
 }
 
 const showAccountDetails = () => {
-    createAccountModal();
+    const accountDetails = document.querySelector('[data-element="modal-account"]');
+    accountDetails.style.display = 'block';
 }
 
-const setListeners = () => {
-    const signUp = document.querySelector('[data-element="sign-up"]');
-    signUp.addEventListener('click', signUpUser);
-    const signIn = document.querySelector('[data-element="sign-in"]');
-    signIn.addEventListener('click', signInUser);
-    const signOut = document.querySelector('[data-element="sign-out"]');
-    signOut.addEventListener('click', signOutUser);
-    const account = document.querySelector('[data-element="account"]');
-    account.addEventListener('click', showAccountDetails);
-    listenForAuthChanges();
+const listenForAuthChanges = () => {
+    const signedInElements = document.querySelectorAll('[data-element="signed-in"]');
+    const signedOutElements = document.querySelectorAll('[data-element="signed-out"]');
+    const info = document.querySelector('[data-element="info"]');
+    const list = document.querySelector('[data-element="list"]');
+    firebase.auth()
+    .onAuthStateChanged(user => {
+        if (user) {
+                console.log('user logged in:', user.email) // do usunięcia
+                signedInElements.forEach(el => el.style.display = 'block');
+                signedOutElements.forEach(el => el.style.display = 'none');
+                createAccountModal(user);
+                firebase.firestore()
+                .collection('tasks')
+                .onSnapshot(snapshot => {
+                    info.innerHTML = '';
+                    renderTasksFromFirestore(snapshot, user);
+                });
+            } else {
+                console.log('user logged out') // do usuniecia
+                signedInElements.forEach(el => el.style.display = 'none');
+                signedOutElements.forEach(el => el.style.display = 'block');
+                info.textContent = 'Brak zadań na liście!';
+                list.innerHTML = '';
+            }
+        });
+    }
+    
+    const setListeners = () => {
+        const signUp = document.querySelector('[data-element="sign-up"]');
+        signUp.addEventListener('click', signUpUser);
+        const signIn = document.querySelector('[data-element="sign-in"]');
+        signIn.addEventListener('click', signInUser);
+        const signOut = document.querySelector('[data-element="sign-out"]');
+        signOut.addEventListener('click', signOutUser);
+        const account = document.querySelector('[data-element="account"]');
+        account.addEventListener('click', showAccountDetails);                    
+        listenForAuthChanges();   
 }
 
 export const renderUserNav = () => {
