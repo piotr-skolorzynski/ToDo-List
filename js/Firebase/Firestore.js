@@ -21,6 +21,29 @@ export const addTaskToFirestore = () => {
         });
 }
 
+const deleteTask = e => {
+    const taskId = e.target.closest('li').getAttribute('data-id');
+    firebase.firestore()
+        .collection('tasks')
+        .doc(taskId)
+        .delete();
+}
+
+const handleUserRequests = e => {
+    const request = e.target.dataset.element;
+    switch (request) {
+        case 'check':
+            changeTaskStatus(e);
+            break;
+        case 'edit':
+            changeTaskContent(e)
+            break;
+        case 'delete':
+            deleteTask(e);
+            break;
+    }
+}
+
 const createTodoBtns = text => {
     return `${text}
             <div class="tools">
@@ -45,5 +68,5 @@ export const renderTasksFromFirestore = (snapshot, user) => {
         li.innerHTML = createTodoBtns(doc.data().content);
         todoList.appendChild(li);
     });
-    // todoList.addEventListener('click', handleUserRequests);
+    todoList.addEventListener('click', e => handleUserRequests(e));
 }
