@@ -70,5 +70,4 @@ export const preparePopupElement = () => {
                 </div>
         </div>`;
     container.append(popup);
-    console.log('buduję popup') // do usunięcia
 };

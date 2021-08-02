@@ -15,6 +15,14 @@ const createSignUpModal = () => {
                         <label for="signup-password">Choose password</label>
                         <input type="password" name="signup-password" id="signup-password" required>
                     </div>
+                    <div class="input-field">
+                        <label for="signup-bio">Short biography</label>
+                        <input type="text" name="signup-bio" id="signup-bio">
+                    </div>
+                    <div class="input-field">
+                        <label for="signup-city">City name</label>
+                        <input type="text" name="signup-city" id="signup-city">
+                    </div>
                     <button type="submit" class="signup-btn">Sign up</button>
                 </form>`;
     div.innerHTML = html;
@@ -29,17 +37,21 @@ const signUpUser = () => {
         e.preventDefault();
         const email = signUpForm['signup-email'].value;
         const password = signUpForm['signup-password'].value;
+        const biography = signUpForm['signup-bio'].value;
+        const city = signUpForm['signup-city'].value;
         firebase.auth()
         .createUserWithEmailAndPassword(email, password)
         .then(credential => {
+            return firebase.firestore().collection('users').doc(credential.user.uid).set({
+                biography: biography,
+                city: city
+            });     
+        })
+        .then(() => {
             const signUpModal = document.querySelector('[data-element="modal-signup"]');
             signUpModal.remove();
             firebase.auth()
-                .signOut()
-                .then(() => {
-                const info = document.querySelector('[data-element="info"]');
-                info.textContent = 'Aby rozpocząć pracę z aplikacją zaloguj się';        
-            });     
+                .signOut();
         })
         .catch(err => console.log('sth went wrong', err.message));
     });
@@ -90,16 +102,24 @@ const signOutUser = () => {
 }
 
 const createAccountModal = user => {
-    const div = document.createElement('div');
-    div.setAttribute('data-element', 'modal-account');
-    div.classList.add('popup');
-    div.style.display = 'none';
-    div.innerHTML = `<h2>Account details</h2>
-                    <div data-element="account-details" class="account-details">
-                        <div>Signed in as ${user.email}</div>
-                    </div>`;;
-    const appContainer = document.querySelector('[data-element="app"]');
-    appContainer.append(div);
+    firebase.firestore()
+        .collection('users')
+        .doc(user.uid)
+        .get()
+        .then(doc => {
+            const div = document.createElement('div');
+            div.setAttribute('data-element', 'modal-account');
+            div.classList.add('popup');
+            div.style.display = 'none';
+            div.innerHTML = `<h2>Account details</h2>
+            <div data-element="account-details" class="account-details">
+                <div>Signed in as: ${user.email}</div>
+                <div>Biography: ${doc.data().biography}</div>
+                <div>City: ${doc.data().city}</div>
+            </div>`;;
+            const appContainer = document.querySelector('[data-element="app"]');
+            appContainer.append(div);
+        })
 }
 
 const showAccountDetails = () => {
@@ -147,6 +167,8 @@ const listenForAuthChanges = () => {
                 signedOutElements.forEach(el => el.style.display = 'block');
                 info.textContent = 'Sign Up or sign in to start!';
                 todoList.innerHTML = '';
+                const accountDetails = document.querySelector('[data-element="modal-account"]');
+                if (accountDetails) accountDetails.remove();
             }
         });
     }
