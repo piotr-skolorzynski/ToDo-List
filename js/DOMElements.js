@@ -62,7 +62,7 @@ export const preparePopupElement = () => {
     popup.innerHTML = 
        `<h2>Edytuj zadanie:</h2>
         <div class="popup-body">
-            <p class="popup-warning"></p>
+            <p data-element="popup_warning" class="popup-warning"></p>
             <input data-element="popup_input" type="text" placeholder="Wpisz nową treść zadania...">
             <div class="btns">
                 <button data-element="popup_accept" class="popup-btn accept">Zatwierdź</button>
@@ -70,4 +70,5 @@ export const preparePopupElement = () => {
                 </div>
         </div>`;
     container.append(popup);
+    console.log('buduję popup') // do usunięcia
 };

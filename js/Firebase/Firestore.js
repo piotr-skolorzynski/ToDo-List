@@ -1,6 +1,9 @@
+import { preparePopupElement, prepareTodoContent } from "../DOMElements.js";
+
 export const addTaskToFirestore = () => {
     const input = document.querySelector('[data-element="input"]');
-    const info = document.querySelector('[data-element="info"]')
+    const info = document.querySelector('[data-element="info"]');
+    const list = document.querySelector('[data-element="list"]');
     firebase.auth()
     .onAuthStateChanged(user => {
         if (user && input.value !== '') {
@@ -34,6 +37,44 @@ const changeTaskStatus = id => {
         })
 }
 
+const updateTaskContentInFirestore = (id, content) => {
+    firebase.firestore()
+        .collection('tasks')
+        .doc(id)
+        .update({
+            content: content
+        })
+}
+
+const changeTaskContent = id => {
+    preparePopupElement();
+    const task = document.querySelector(`[data-id="${id}"]`);
+    const popup = document.querySelector('[data-element="popup"]');
+    const input = document.querySelector('[data-element="popup_input"]');
+    const cancelChange = document.querySelector('[data-element="popup_cancel"]');
+    const acceptChange = document.querySelector('[data-element="popup_accept"]');
+    const info = document.querySelector('[data-element="popup_warning"]');
+    input.value = task.textContent;
+    cancelChange.addEventListener('click', () => {
+        popup.remove();
+    });
+    input.addEventListener('keyup', e => {
+        if (e.code === 'Enter') {
+            if (input.value === '' || input.value === ' ') {
+                info.textContent = 'insert any content before updating';
+            } else {
+                info.textContent = '';
+                popup.remove();
+                updateTaskContentInFirestore(id, input.value);
+            }
+        } 
+    }); 
+    acceptChange.addEventListener('click', () => {
+        popup.remove();
+        updateTaskContentInFirestore(id, input.value);
+    });
+}
+
 const deleteTask = id => {
     firebase.firestore()
         .collection('tasks')
@@ -57,15 +98,6 @@ const handleUserRequests = e => {
     }
 }
 
-const createTodoBtns = text => {
-    return `${text}
-            <div class="tools">
-                <button class="btn checkBtn"><i data-element="check" class="fas fa-check"></i></button>
-                <button class="btn editBtn"><i data-element="edit" class="far fa-edit"></i></button>
-                <button class="btn deleteBtn"><i data-element="delete" class="far fa-trash-alt"></i></button>
-            </div>`;
-}
-
 export const renderTasksFromFirestore = snapshot => {   
     const todoList = document.querySelector('[data-element="list"]');
     todoList.innerHTML = '';
@@ -77,7 +109,7 @@ export const renderTasksFromFirestore = snapshot => {
         if (doc.data().done === true) {
             li.classList.add('completed');
         }
-        li.innerHTML = createTodoBtns(doc.data().content);
+        li.innerHTML = prepareTodoContent(doc.data().content);
         todoList.appendChild(li);
     });
     todoList.addEventListener('click', e => handleUserRequests(e));

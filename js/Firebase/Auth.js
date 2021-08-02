@@ -84,6 +84,8 @@ const signInUser = () => {
 
 const signOutUser = () => {
     firebase.auth().signOut();
+    const accountDetails = document.querySelector('[data-element="modal-account"]');
+    accountDetails.remove();
 }
 
 const createAccountModal = user => {
@@ -112,7 +114,7 @@ const listenForAuthChanges = () => {
     firebase.auth()
     .onAuthStateChanged(user => {
         if (user) {
-                console.log('user logged in:', user.email, user.uid) // do usunięcia
+                console.log('auth state changed', user); // do usnięcia
                 signedInElements.forEach(el => el.style.display = 'block');
                 signedOutElements.forEach(el => el.style.display = 'none');
                 createAccountModal(user);
@@ -123,8 +125,8 @@ const listenForAuthChanges = () => {
                     info.innerHTML = '';
                     renderTasksFromFirestore(snapshot);
                 }, err => console.log(err.message)); //przy onsnapshot nie ma catch ale error jest jako drugi parametr
+                setListeners();
             } else {
-                console.log('user logged out') // do usuniecia
                 signedInElements.forEach(el => el.style.display = 'none');
                 signedOutElements.forEach(el => el.style.display = 'block');
                 info.textContent = 'Sign Up or sign in to start!';
@@ -147,8 +149,7 @@ const listenForAuthChanges = () => {
         const input = document.querySelector('[data-element="input"]');
         input.addEventListener('keyup', e => {
             if (e.code === 'Enter') addTaskToFirestore();
-        });                    
-        listenForAuthChanges();   
+        });                       
 }
 
 export const renderUserNav = () => {
@@ -171,5 +172,5 @@ export const renderUserNav = () => {
     nav.innerHTML = html;
     const todoHeader = document.querySelector('[data-element="header"]');
     todoHeader.insertAdjacentElement('afterbegin', nav);
-    setListeners();
+    listenForAuthChanges();
 }
