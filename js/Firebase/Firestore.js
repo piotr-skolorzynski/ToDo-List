@@ -54,7 +54,7 @@ const changeTaskContent = id => {
     const cancelChange = document.querySelector('[data-element="popup_cancel"]');
     const acceptChange = document.querySelector('[data-element="popup_accept"]');
     const info = document.querySelector('[data-element="popup_warning"]');
-    input.value = task.textContent;
+    input.value = task.innerText;
     cancelChange.addEventListener('click', () => {
         popup.remove();
     });
@@ -82,7 +82,7 @@ const deleteTask = id => {
         .delete();
 }
 
-const handleUserRequests = e => {
+export const handleUserRequests = e => {
     const request = e.target.dataset.element;
     const taskId = e.target.closest('li').getAttribute('data-id');
     switch (request) {
@@ -98,19 +98,15 @@ const handleUserRequests = e => {
     }
 }
 
-export const renderTasksFromFirestore = snapshot => {   
+export const renderTasksFromFirestore = doc => {   
     const todoList = document.querySelector('[data-element="list"]');
-    todoList.innerHTML = '';
-    snapshot.docs.forEach(doc => {
-        const li = document.createElement('li');
-        li.setAttribute('data-id', `${doc.id}`);
-        li.setAttribute('data-is-finished', `${doc.data().done}`);
-        li.classList.add('list-item');
-        if (doc.data().done === true) {
-            li.classList.add('completed');
-        }
-        li.innerHTML = prepareTodoContent(doc.data().content);
-        todoList.appendChild(li);
-    });
-    todoList.addEventListener('click', e => handleUserRequests(e));
+    const li = document.createElement('li');
+    li.setAttribute('data-id', `${doc.id}`);
+    li.setAttribute('data-is-finished', `${doc.data().done}`);
+    li.classList.add('list-item');
+    if (doc.data().done === true) {
+        li.classList.add('completed');
+    }
+    li.innerHTML = prepareTodoContent(doc.data().content);
+    todoList.appendChild(li);
 }

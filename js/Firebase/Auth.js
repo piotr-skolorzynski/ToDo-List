@@ -1,4 +1,5 @@
-import { renderTasksFromFirestore, addTaskToFirestore } from "./Firestore.js";
+import { prepareTodoContent } from "../DOMElements.js";
+import { renderTasksFromFirestore, addTaskToFirestore, handleUserRequests } from "./Firestore.js";
 
 const createSignUpModal = () => {
     const div = document.createElement('div');
@@ -109,12 +110,11 @@ const showAccountDetails = () => {
 const listenForAuthChanges = () => {
     const signedInElements = document.querySelectorAll('[data-element="signed-in"]');
     const signedOutElements = document.querySelectorAll('[data-element="signed-out"]');
-    const info = document.querySelector('[data-element="info"]');
-    const list = document.querySelector('[data-element="list"]');
+    const info = document.querySelectorAll('[data-element="list"]');
+    const todoList = document.querySelector('[data-element="list"]');
     firebase.auth()
     .onAuthStateChanged(user => {
         if (user) {
-                console.log('auth state changed', user); // do usnięcia
                 signedInElements.forEach(el => el.style.display = 'block');
                 signedOutElements.forEach(el => el.style.display = 'none');
                 createAccountModal(user);
@@ -122,15 +122,31 @@ const listenForAuthChanges = () => {
                 .collection('tasks')
                 .where('user', '==', user.uid) //query to filter tasks belonging to signed in user
                 .onSnapshot(snapshot => {
-                    info.innerHTML = '';
-                    renderTasksFromFirestore(snapshot);
-                }, err => console.log(err.message)); //przy onsnapshot nie ma catch ale error jest jako drugi parametr
-                setListeners();
+                    let changes = snapshot.docChanges();
+                    changes.forEach(change => {
+                        if (change.type === 'added') {
+                            renderTasksFromFirestore(change.doc)
+                        } else if (change.type === 'removed') {
+                            let taskToDelete = document.querySelector(`[data-id="${change.doc.id}"]`);
+                            taskToDelete.remove();
+                        } else if (change.type === 'modified') {
+                            const taskToModify = document.querySelector(`[data-id="${change.doc.id}"]`);
+                            taskToModify.innerHTML = prepareTodoContent(change.doc.data().content);
+                            taskToModify.dataset.isFinished = change.doc.data().done.toString();
+                            if (taskToModify.dataset.isFinished === 'true') {
+                                taskToModify.classList.add('completed');
+                            } else {
+                                taskToModify.classList.remove('completed');
+                            }
+                        }
+                    })
+                }, err => console.log(err.message)) //przy onsnapshot nie ma catch ale error jest jako drugi parametr
+                todoList.addEventListener('click', e => handleUserRequests(e));
             } else {
                 signedInElements.forEach(el => el.style.display = 'none');
                 signedOutElements.forEach(el => el.style.display = 'block');
                 info.textContent = 'Sign Up or sign in to start!';
-                list.innerHTML = '';
+                todoList.innerHTML = '';
             }
         });
     }
@@ -172,5 +188,6 @@ export const renderUserNav = () => {
     nav.innerHTML = html;
     const todoHeader = document.querySelector('[data-element="header"]');
     todoHeader.insertAdjacentElement('afterbegin', nav);
+    setListeners();
     listenForAuthChanges();
 }
