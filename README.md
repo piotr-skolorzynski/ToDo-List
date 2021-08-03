@@ -14,3 +14,4 @@ Another ToDo List like thousands before mine...
 6. Editing task and saving changes in local storage
 7. Loading task from local storage after launching the list 
 
+8. All above functionalities are available in firebase.
