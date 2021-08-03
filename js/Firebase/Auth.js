@@ -23,6 +23,10 @@ const createSignUpModal = () => {
                         <label for="signup-city">City name</label>
                         <input type="text" name="signup-city" id="signup-city">
                     </div>
+                    <div class="input-field">
+                        <label for="signup-file">Avatar</label>
+                        <input type="file" data-element="signup-file" name="signup-file" id="signup-file">
+                    </div>
                     <button type="submit" class="signup-btn">Sign up</button>
                 </form>`;
     div.innerHTML = html;
@@ -39,13 +43,21 @@ const signUpUser = () => {
         const password = signUpForm['signup-password'].value;
         const biography = signUpForm['signup-bio'].value;
         const city = signUpForm['signup-city'].value;
+        const inputFile = document.querySelector('[data-element="signup-file"]');
+        const avatar = inputFile.addEventListener('change', () => {
+            return inputFile.files[0];
+        })
         firebase.auth()
         .createUserWithEmailAndPassword(email, password)
-        .then(credential => {
-            return firebase.firestore().collection('users').doc(credential.user.uid).set({
+        .then(token => {
+            firebase.storage()
+                .ref(`avatars/${token.user.uid}/user-avatar.jpg`)
+                .put(avatar);
+
+            return firebase.firestore().collection('users').doc(token.user.uid).set({
                 biography: biography,
                 city: city
-            });     
+            });   
         })
         .then(() => {
             const signUpModal = document.querySelector('[data-element="modal-signup"]');
@@ -53,7 +65,6 @@ const signUpUser = () => {
             firebase.auth()
                 .signOut();
         })
-        .catch(err => console.log('sth went wrong', err.message));
     });
 }
 
