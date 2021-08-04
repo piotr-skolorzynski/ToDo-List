@@ -5,7 +5,7 @@ const createSignUpModal = () => {
     const div = document.createElement('div');
     div.setAttribute('data-element', 'modal-signup');
     div.classList.add('popup');
-    const html = `<h2>Sign up</h2>
+    const html = `<h2>Sign up <span data-element="signup-close" style="cursor:pointer;">X</span></h2>
                 <form data-element="form-signup" class="form-signup">
                     <div class="input-field">
                         <label for="signup-email"> Email address </label>
@@ -34,8 +34,27 @@ const createSignUpModal = () => {
     appContainer.append(div);
 }
 
+const addFileToStorage = (token, avatar) => {
+    const metadata = {
+        contentType: avatar.type
+    }
+    return firebase.storage()
+                .ref(`avatars/${token.user.uid}/user-avatar.jpg`)
+                .put(avatar, metadata);
+}
+
+const addUsersDetailsToFirestore = (token, biography, city) => {
+    return firebase.firestore().collection('users').doc(token.user.uid).set({
+                biography,
+                city
+            });
+}
+
 const signUpUser = () => {
     createSignUpModal();
+    const signUpModal = document.querySelector('[data-element="modal-signup"]');
+    const closeBtn = document.querySelector('[data-element="signup-close"]');
+    closeBtn.addEventListener('click', () => signUpModal.remove());
     const signUpForm = document.querySelector('[data-element="form-signup"]');
     signUpForm.addEventListener('submit', e => {
         e.preventDefault();
@@ -43,24 +62,15 @@ const signUpUser = () => {
         const password = signUpForm['signup-password'].value;
         const biography = signUpForm['signup-bio'].value;
         const city = signUpForm['signup-city'].value;
-        const inputFile = document.querySelector('[data-element="signup-file"]');
-        const avatar = inputFile.addEventListener('change', () => {
-            return inputFile.files[0];
-        })
+        const avatar = document.querySelector('[data-element="signup-file"]').files[0];
         firebase.auth()
         .createUserWithEmailAndPassword(email, password)
         .then(token => {
-            firebase.storage()
-                .ref(`avatars/${token.user.uid}/user-avatar.jpg`)
-                .put(avatar);
-
-            return firebase.firestore().collection('users').doc(token.user.uid).set({
-                biography: biography,
-                city: city
-            });   
+            const avatarPromise = addFileToStorage(token, avatar);
+            const userDetailsPromise = addUsersDetailsToFirestore(token, biography, city);
+            return Promise.all([avatarPromise, userDetailsPromise]);
         })
         .then(() => {
-            const signUpModal = document.querySelector('[data-element="modal-signup"]');
             signUpModal.remove();
             firebase.auth()
                 .signOut();
@@ -113,24 +123,38 @@ const signOutUser = () => {
 }
 
 const createAccountModal = user => {
-    firebase.firestore()
-        .collection('users')
-        .doc(user.uid)
-        .get()
-        .then(doc => {
-            const div = document.createElement('div');
-            div.setAttribute('data-element', 'modal-account');
-            div.classList.add('popup');
-            div.style.display = 'none';
-            div.innerHTML = `<h2>Account details</h2>
-            <div data-element="account-details" class="account-details">
+        firebase.firestore()
+            .collection('users')
+            .doc(user.uid)
+            .get()
+            .then(doc => {
+                const div = document.createElement('div');
+                div.setAttribute('data-element', 'modal-account');
+                div.classList.add('popup');
+                div.style.display = 'none';
+                div.innerHTML = `<h2>Account details</h2>
+                <div data-element="account-details" class="account-details">
+                <div>
+                    <img data-element="user-avatar" src="" alt="profile picture">
+                </div>
                 <div>Signed in as: ${user.email}</div>
                 <div>Biography: ${doc.data().biography}</div>
                 <div>City: ${doc.data().city}</div>
-            </div>`;;
-            const appContainer = document.querySelector('[data-element="app"]');
-            appContainer.append(div);
-        })
+                </div>`;
+                const appContainer = document.querySelector('[data-element="app"]');
+                appContainer.append(div);
+                const userAvatar = document.querySelector('[data-element="user-avatar"]');
+                firebase.storage()
+                    .ref(`avatars/${user.uid}/user-avatar.jpg`)
+                    .getDownloadURL()
+                    .then(url => {
+                        userAvatar.src = url;
+                    })
+                    .catch(err => {
+                        console.log(err.message);
+                        userAvatar.src = ""; //stworzyć alternatywę
+                    })    
+            })
 }
 
 const showAccountDetails = () => {

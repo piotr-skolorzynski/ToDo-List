@@ -9,7 +9,6 @@ const main = () => {
     firebase.analytics();
     firebase.firestore()
         .settings({ timestampsInSnapshots: true });
-    var storage = firebase.storage();
 };
 
 document.addEventListener('DOMContentLoaded', main);
