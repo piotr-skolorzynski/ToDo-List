@@ -204,7 +204,6 @@ const listenForAuthChanges = () => {
                         }
                     })
                 }, err => console.log(err.message)) //przy onsnapshot nie ma catch ale error jest jako drugi parametr
-                todoList.addEventListener('click', e => handleUserRequests(e));
             } else {
                 signedInElements.forEach(el => el.style.display = 'none');
                 signedOutElements.forEach(el => el.style.display = 'block');
@@ -253,6 +252,8 @@ export const renderUserNav = () => {
     nav.innerHTML = html;
     const todoHeader = document.querySelector('[data-element="header"]');
     todoHeader.insertAdjacentElement('afterbegin', nav);
+    const todoList = document.querySelector('[data-element="list"]');
+    todoList.addEventListener('click', e => handleUserRequests(e));
     setListeners();
     listenForAuthChanges();
 }

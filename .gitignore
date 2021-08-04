@@ -1,6 +1,16 @@
 # Created by https://www.toptal.com/developers/gitignore/api/linux,vscode
 # Edit at https://www.toptal.com/developers/gitignore?templates=linux,vscode
 
+### Firebase ###
+
+/public
+/.firebaserc
+/firebase.json
+/firestore.indexes.json
+/firestore.rules
+/storage.rules
+/.firebase
+
 ### Linux ###
 *~
 
