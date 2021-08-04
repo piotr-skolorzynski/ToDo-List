@@ -45,6 +45,13 @@ body {
     color: #81afe4;
 }
 
+.user-avatar {
+    width: 150px;
+    height: 150px;
+    margin: 10px 0;
+    border-radius: 100%;
+}
+
 /* toDo List style */
 
 .todo-header {

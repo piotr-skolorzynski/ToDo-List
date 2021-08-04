@@ -132,18 +132,18 @@ const createAccountModal = user => {
                 div.setAttribute('data-element', 'modal-account');
                 div.classList.add('popup');
                 div.style.display = 'none';
-                div.innerHTML = `<h2>Account details</h2>
+                div.innerHTML = `<h2>Account details <span data-element="account-close" style="cursor:pointer;">X</span></h2>
                 <div data-element="account-details" class="account-details">
-                <div>
-                    <img data-element="user-avatar" src="" alt="profile picture">
-                </div>
-                <div>Signed in as: ${user.email}</div>
-                <div>Biography: ${doc.data().biography}</div>
-                <div>City: ${doc.data().city}</div>
+                    <img class="user-avatar" data-element="user-avatar" src="" alt="profile picture">
+                    <div>Signed in as: ${user.email}</div>
+                    <div>Biography: ${doc.data().biography}</div>
+                    <div>City: ${doc.data().city}</div>
                 </div>`;
                 const appContainer = document.querySelector('[data-element="app"]');
                 appContainer.append(div);
                 const userAvatar = document.querySelector('[data-element="user-avatar"]');
+                const accountModal = document.querySelector('[data-element="modal-account"]');
+                const accountDetails = document.querySelector('[data-element="account-details"]');
                 firebase.storage()
                     .ref(`avatars/${user.uid}/user-avatar.jpg`)
                     .getDownloadURL()
@@ -152,8 +152,16 @@ const createAccountModal = user => {
                     })
                     .catch(err => {
                         console.log(err.message);
-                        userAvatar.src = ""; //stworzyć alternatywę
-                    })    
+                        userAvatar.remove();
+                        const userIcon = document.createElement('i');
+                        userIcon.classList.add('fas');
+                        userIcon.classList.add('fa-user-circle');
+                        accountDetails.insertAdjacentElement('afterbegin', userIcon);
+                    });
+                const closeBtn = document.querySelector('[data-element="account-close"]');
+                closeBtn.addEventListener('click', () => {
+                    accountModal.style.display = 'none';
+                })    
             })
 }
 
