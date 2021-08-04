@@ -1,9 +1,9 @@
 export var firebaseConfig = {
-    apiKey: "AIzaSyBEvtH0OrynlyvsdRgsEhm_uAm-RUjwAdY",
-    authDomain: "todolist-skolo.firebaseapp.com",
-    projectId: "todolist-skolo",
-    storageBucket: "todolist-skolo.appspot.com",
-    messagingSenderId: "878044008615",
-    appId: "1:878044008615:web:2d07aaeb3903f2294ccb82",
-    measurementId: "G-NZ5VG5NKW9"
+    apiKey: "AIzaSyDiDYldBq7VSscMEEe8eFTZCLhutb7KTXQ",
+    authDomain: "todo-skolo.firebaseapp.com",
+    projectId: "todo-skolo",
+    storageBucket: "todo-skolo.appspot.com",
+    messagingSenderId: "216999600032",
+    appId: "1:216999600032:web:6866d319ad2beaf7bd0ec5",
+    measurementId: "G-5CY7TF1BBJ"
 };

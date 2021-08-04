@@ -3,7 +3,6 @@ import { preparePopupElement, prepareTodoContent } from "../DOMElements.js";
 export const addTaskToFirestore = () => {
     const input = document.querySelector('[data-element="input"]');
     const info = document.querySelector('[data-element="info"]');
-    const list = document.querySelector('[data-element="list"]');
     firebase.auth()
     .onAuthStateChanged(user => {
         if (user && input.value !== '') {
@@ -17,9 +16,7 @@ export const addTaskToFirestore = () => {
                 info.textContent = '';
                 input.value = '';
             } else {
-                info.textContent = 'Sign Up or sign in to start!';
-                list.innerHTML = '';
-                input.value = '';
+                info.innerText = 'Input any content to add task';
             }
         });
 }
