@@ -24,8 +24,8 @@ const createSignUpModal = () => {
                         <input type="text" name="signup-city" id="signup-city">
                     </div>
                     <div class="input-field">
-                        <label for="signup-file">Avatar</label>
-                        <input type="file" data-element="signup-file" name="signup-file" id="signup-file">
+                        <label for="signup-file">Avatar (format .jpg)</label>
+                        <input type="file" data-element="signup-file" name="signup-file" id="signup-file" required>
                     </div>
                     <button type="submit" class="signup-btn">Sign up</button>
                 </form>`;
@@ -253,7 +253,11 @@ export const renderUserNav = () => {
     const todoHeader = document.querySelector('[data-element="header"]');
     todoHeader.insertAdjacentElement('afterbegin', nav);
     const todoList = document.querySelector('[data-element="list"]');
-    todoList.addEventListener('click', e => handleUserRequests(e));
+    todoList.addEventListener('click', e => {
+        console.log('kliknięcie nastąpiło na: ', e.target);
+        console.log('nasłuchiwanie jest na: ', e.currentTarget)
+        handleUserRequests(e);
+    });
     setListeners();
     listenForAuthChanges();
 }

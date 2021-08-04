@@ -13,15 +13,15 @@ export const prepareDOMEvents = () => {
 };
 
 export const chooseStorageForm = () => {
-    const firebase = document.querySelector('[data-element="popup_firebase"]');
-    const localStorage = document.querySelector('[data-element="popup_storage"]');
+    const firebaseBtn = document.querySelector('[data-element="popup_firebase"]');
+    const localStorageBtn = document.querySelector('[data-element="popup_storage"]');
     const popup = document.querySelector('[data-element="popup_info"]');
-    firebase.addEventListener('click', () => {
+    firebaseBtn.addEventListener('click', () => {
         prepareDOMElements();
         renderUserNav();
         popup.remove();
     });
-    localStorage.addEventListener('click', () => {
+    localStorageBtn.addEventListener('click', () => {
         popup.remove();
         prepareDOMElements();
         prepareDOMEvents();
