@@ -4,10 +4,10 @@ export const createStartingInfo = () => {
     popup.setAttribute('data-element', 'popup_info');
     popup.classList.add('popup');
     popup.innerHTML = 
-       `<h2>Where would you like to store your tasks?</h2>
-        <div class="popup-body">
-            <p class="warning">Firebase - Google service, you can work anywhere you want.</p>
-            <p class="warning">Local Storage - you can storage your task in browser's storage. Tasks are available only on the browser you are currently working with</p>
+       `<h2 class="starting-info-title">Where would you like to store your tasks?</h2>
+        <div class="starting-info-content">
+            <p class="starting-info-text">Firebase - Google service, you can work anywhere you want.</p>
+            <p class="starting-info-text">Local Storage - you can storage your tasks in browser's storage. Tasks will be available only on the browser you are currently working with</p>
             <div class="btns">
                 <button data-element="popup_firebase" class="popup-btn accept">Firebase</button>
                 <button data-element="popup_storage" class="popup-btn cancel">Local Storage</button>
@@ -28,7 +28,7 @@ export const prepareDOMElements = () => {
         </div>
         <div class="todo-body">
             <h2>Tasks list:</h2>
-            <p data-element="info" class="warning">No tasks on the list!</p>
+            <p data-element="info" class="warning"></p>
             <ul data-element="list" class="todo-list"></ul>
         </div>`;
 };
@@ -60,7 +60,7 @@ export const preparePopupElement = () => {
     popup.setAttribute('data-element', 'popup');
     popup.classList.add('popup');
     popup.innerHTML = 
-       `<h2>Edit task:</h2>
+       `<h2 class="popup-title">Edit task:</h2>
         <div class="popup-body">
             <p data-element="popup_warning" class="popup-warning"></p>
             <input data-element="popup_input" type="text" placeholder="Enter task content ...">

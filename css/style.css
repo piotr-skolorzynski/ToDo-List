@@ -18,7 +18,27 @@ body {
     background: #ccc;
 }
 
-/*firebase styles*/
+/* modal starting info */
+
+.starting-info-title {
+    margin-top: 1.5rem;
+    font-size: 3.4rem;
+    text-align: center;
+    word-spacing: 5px;
+}
+
+.starting-info-content {
+    padding: 2rem 4rem 3rem;
+}
+
+.starting-info-text {
+    margin: 2rem 0;
+    font-size: 2.2rem;
+    word-spacing: 3px;
+    line-height: 1.2;
+}
+
+/*firebase navigation*/
 
 .todo-nav {
     margin: 1rem;
@@ -45,11 +65,58 @@ body {
     color: #81afe4;
 }
 
+/* account modal */
 .user-avatar {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     margin: 10px 0;
     border-radius: 100%;
+}
+
+/* signup-modal */
+
+.modal-signup-title {
+    margin-bottom: 1rem;
+    padding: 0 2rem;
+    font-size: 3.4rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-btn-close {
+    padding: 0 2rem 1rem;
+    cursor: pointer;
+}
+
+.form-signup {
+    padding: 1rem 2rem;
+}
+
+.input-field {
+    margin: 1rem;
+}
+
+.input-field label {
+    font-size: 1.8rem;
+}
+
+.input-field input {
+    padding: .2rem;
+    font-size: 1.6rem;
+}
+
+.signup-btn {
+    margin-left: 1rem;
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    background-color: rgb(217, 218, 171);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color .3s;
+}
+
+.signup-btn:hover {
+    background-color: rgb(223, 226, 17);
 }
 
 /* toDo List style */
@@ -211,7 +278,7 @@ h1 {
     box-shadow: 2px 2px 3px #000000;
 }
 
-.popup h2 {
+.popup-title {
     margin: .5rem 0;
     padding: .5rem 0;
     font-size: 3rem;

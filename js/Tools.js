@@ -18,7 +18,7 @@ export const addTask = () => {
         input.value = '';
         info.innerText = '';
     } else {
-        info.innerText = 'Enter the task content!';
+        info.innerText = 'Enter task content!';
     }
 };
 
@@ -54,7 +54,7 @@ const handleEditTodo = e => {
     popupInput.value = clickedTask.innerText;
     popupAcceptBtn.addEventListener('click', () => {
         if (popupInput.value === '') {
-        popupInput.placeholder = 'Enter the task content!';
+        popupInput.placeholder = 'Enter task content!';
         } else {
             updateLocalStorage(clickedTaskId, popupInput.value, isFinished);
             clickedTask.innerHTML = prepareTodoContent(popupInput.value);            

@@ -5,26 +5,26 @@ const createSignUpModal = () => {
     const div = document.createElement('div');
     div.setAttribute('data-element', 'modal-signup');
     div.classList.add('popup');
-    const html = `<h2>Sign up <span data-element="signup-close" style="cursor:pointer;">X</span></h2>
+    const html = `<h2 class="modal-signup-title">Sign up <span data-element="signup-close" <span class="modal-btn-close">x</span></h2>
                 <form data-element="form-signup" class="form-signup">
                     <div class="input-field">
-                        <label for="signup-email"> Email address </label>
+                        <label for="signup-email">email </label>
                         <input type="email" name="signup-email" id="signup-email" required>
                     </div>
                     <div class="input-field">
-                        <label for="signup-password">Choose password</label>
+                        <label for="signup-password"> password </label>
                         <input type="password" name="signup-password" id="signup-password" required>
                     </div>
                     <div class="input-field">
-                        <label for="signup-bio">Short info</label>
+                        <label for="signup-bio">short info </label>
                         <input type="text" name="signup-bio" id="signup-bio">
                     </div>
                     <div class="input-field">
-                        <label for="signup-city">City name</label>
+                        <label for="signup-city">city name </label>
                         <input type="text" name="signup-city" id="signup-city">
                     </div>
                     <div class="input-field">
-                        <label for="signup-file">Avatar (format .jpg)</label>
+                        <label for="signup-file">avatar (format .jpg) </label>
                         <input type="file" data-element="signup-file" name="signup-file" id="signup-file" required>
                     </div>
                     <button type="submit" class="signup-btn">Sign up</button>
@@ -108,18 +108,21 @@ const signInUser = () => {
         const password = signInForm['signin-password'].value;
         firebase.auth()
             .signInWithEmailAndPassword(email, password)
-            .then(credential => {
+            .then(() => {
                 const signInModal = document.querySelector('[data-element="modal-signin"]');
                 signInModal.remove();
             })
-            .catch(err => console.log('sth went wrong', err.message));
+            .catch(err => console.log(err.message));
     });
 }
 
 const signOutUser = () => {
-    firebase.auth().signOut();
-    const accountDetails = document.querySelector('[data-element="modal-account"]');
-    accountDetails.remove();
+    firebase.auth()
+        .signOut()
+        .then(() => {
+            const accountDetails = document.querySelector('[data-element="modal-account"]');
+            accountDetails.remove();
+        })
 }
 
 const createAccountModal = user => {
@@ -207,7 +210,7 @@ const listenForAuthChanges = () => {
             } else {
                 signedInElements.forEach(el => el.style.display = 'none');
                 signedOutElements.forEach(el => el.style.display = 'block');
-                info.textContent = 'Sign Up or sign in to start!';
+                info.innerText = 'Sign Up or sign in to start!';
                 todoList.innerHTML = '';
                 const accountDetails = document.querySelector('[data-element="modal-account"]');
                 if (accountDetails) accountDetails.remove();
