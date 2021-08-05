@@ -16,7 +16,7 @@ const createSignUpModal = () => {
                         <input type="password" name="signup-password" id="signup-password" required>
                     </div>
                     <div class="input-field">
-                        <label for="signup-bio">Short biography</label>
+                        <label for="signup-bio">Short info</label>
                         <input type="text" name="signup-bio" id="signup-bio">
                     </div>
                     <div class="input-field">
@@ -253,11 +253,7 @@ export const renderUserNav = () => {
     const todoHeader = document.querySelector('[data-element="header"]');
     todoHeader.insertAdjacentElement('afterbegin', nav);
     const todoList = document.querySelector('[data-element="list"]');
-    todoList.addEventListener('click', e => {
-        console.log('kliknięcie nastąpiło na: ', e.target);
-        console.log('nasłuchiwanie jest na: ', e.currentTarget)
-        handleUserRequests(e);
-    });
+    todoList.addEventListener('click', e => handleUserRequests(e));
     setListeners();
     listenForAuthChanges();
 }

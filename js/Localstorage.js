@@ -5,7 +5,7 @@ export const loadTasksFromLocalStorage = () => {
     const info = document.querySelector('[data-element="info"]');
     if (localStorage.getItem("taskList") === null) {
         taskList = [];
-        info.innerText = 'Brak zadań na liście!';
+        info.innerText = 'No tasks on the list!';
     } else {
         taskList = JSON.parse(localStorage.getItem("taskList"));
         info.innerText = '';
@@ -22,7 +22,7 @@ export const saveTaskInLocalStorage = (id, taskContent, taskStatus) => {
     const info = document.querySelector('[data-element="info"]');
     if (localStorage.getItem("taskList") === null) {
         taskList = [];
-        info.innerText = 'Brak zadań na liście!';
+        info.innerText = 'No tasks on the list!';
     } else {
         taskList = JSON.parse(localStorage.getItem("taskList"));
     }
@@ -40,7 +40,7 @@ export const updateLocalStorage = (id, newTaskContent, taskStatus) => {
     const info = document.querySelector('[data-element="info"]');
     if (localStorage.getItem("taskList") === null) {
         taskList = [];
-        info.innerText = 'Brak zadań na liście!';
+        info.innerText = 'No tasks on the list!';
     } else {
         taskList = JSON.parse(localStorage.getItem("taskList"));
     }
@@ -61,7 +61,7 @@ export const removeTaskFromLocalStorage = id => {
     const info = document.querySelector('[data-element="info"]');
     if (localStorage.getItem("taskList") === null) {
         taskList = [];
-        info.innerText = 'Brak zadań na liście!';
+        info.innerText = 'No tasks on the list!';
     } else {
         taskList = JSON.parse(localStorage.getItem("taskList"));
     }

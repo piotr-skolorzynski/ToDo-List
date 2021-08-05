@@ -16,7 +16,7 @@ export const addTaskToFirestore = () => {
                 info.textContent = '';
                 input.value = '';
             } else {
-                info.innerText = 'Input any content to add task';
+                info.innerText = 'Enter task content ...';
             }
         });
 }
@@ -39,7 +39,7 @@ const updateTaskContentInFirestore = (id, content) => {
         .collection('tasks')
         .doc(id)
         .update({
-            content: content
+            content
         })
 }
 
@@ -58,7 +58,7 @@ const changeTaskContent = id => {
     input.addEventListener('keyup', e => {
         if (e.code === 'Enter') {
             if (input.value === '' || input.value === ' ') {
-                info.textContent = 'insert any content before updating';
+                info.textContent = 'Enter task content ...';
             } else {
                 info.textContent = '';
                 popup.remove();

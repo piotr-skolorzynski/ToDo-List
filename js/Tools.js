@@ -18,7 +18,7 @@ export const addTask = () => {
         input.value = '';
         info.innerText = '';
     } else {
-        info.innerText = 'Wpisz treść zadania!';
+        info.innerText = 'Enter the task content!';
     }
 };
 
@@ -54,7 +54,7 @@ const handleEditTodo = e => {
     popupInput.value = clickedTask.innerText;
     popupAcceptBtn.addEventListener('click', () => {
         if (popupInput.value === '') {
-        popupInput.placeholder = 'Nowe zadanie musi posiadać treść!';
+        popupInput.placeholder = 'Enter the task content!';
         } else {
             updateLocalStorage(clickedTaskId, popupInput.value, isFinished);
             clickedTask.innerHTML = prepareTodoContent(popupInput.value);            

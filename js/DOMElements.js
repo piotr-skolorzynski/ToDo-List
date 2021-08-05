@@ -4,10 +4,10 @@ export const createStartingInfo = () => {
     popup.setAttribute('data-element', 'popup_info');
     popup.classList.add('popup');
     popup.innerHTML = 
-       `<h2>wybierz miejsce przechowywania swoich zadań:</h2>
+       `<h2>Where would you like to store your tasks?</h2>
         <div class="popup-body">
-            <p class="warning">Firebase - usługa Google, umożliwia dostęp do swoich zadań niezależnie od miejsca. Potrzebujesz jedynie dostępu do internetu i przeglądarki.</p>
-            <p class="warning"> Local Storage umożliwia jedynie zapisanie zadań w przeglądarce na której aktualnie pracujesz!</p>
+            <p class="warning">Firebase - Google service, you can work anywhere you want.</p>
+            <p class="warning">Local Storage - you can storage your task in browser's storage. Tasks are available only on the browser you are currently working with</p>
             <div class="btns">
                 <button data-element="popup_firebase" class="popup-btn accept">Firebase</button>
                 <button data-element="popup_storage" class="popup-btn cancel">Local Storage</button>
@@ -22,13 +22,13 @@ export const prepareDOMElements = () => {
        `<div data-element="header" class="todo-header">
             <h1>ToDo List</h1>
             <div class="add-task">
-                <input data-element="input" type="text" placeholder="Wpisz treść zadania...">
+                <input data-element="input" type="text" placeholder="Enter task content ...">
                 <button data-element="add" class="addBtn">Add</button>
             </div>
         </div>
         <div class="todo-body">
-            <h2>Lista zadań:</h2>
-            <p data-element="info" class="warning">Brak zadań na liście!</p>
+            <h2>Tasks list:</h2>
+            <p data-element="info" class="warning">No tasks on the list!</p>
             <ul data-element="list" class="todo-list"></ul>
         </div>`;
 };
@@ -60,13 +60,13 @@ export const preparePopupElement = () => {
     popup.setAttribute('data-element', 'popup');
     popup.classList.add('popup');
     popup.innerHTML = 
-       `<h2>Edytuj zadanie:</h2>
+       `<h2>Edit task:</h2>
         <div class="popup-body">
             <p data-element="popup_warning" class="popup-warning"></p>
-            <input data-element="popup_input" type="text" placeholder="Wpisz nową treść zadania...">
+            <input data-element="popup_input" type="text" placeholder="Enter task content ...">
             <div class="btns">
-                <button data-element="popup_accept" class="popup-btn accept">Zatwierdź</button>
-                <button data-element="popup_cancel" class="popup-btn cancel">Anuluj</button>
+                <button data-element="popup_accept" class="popup-btn accept">Change</button>
+                <button data-element="popup_cancel" class="popup-btn cancel">Cancel</button>
                 </div>
         </div>`;
     container.append(popup);
