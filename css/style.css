@@ -110,9 +110,21 @@ body {
     cursor: pointer;
 }
 
-/* signup-modal */
+.sign-btn {
+    margin-left: 1rem;
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    background-color: rgb(217, 218, 171);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color .3s;
+}
 
-.form-signup {
+.sign-btn:hover {
+    background-color: rgb(223, 226, 17);
+}
+
+.form-sign {
     padding: 1rem 2rem;
 }
 
@@ -127,20 +139,6 @@ body {
 .input-field input {
     padding: .2rem;
     font-size: 1.6rem;
-}
-
-.signup-btn {
-    margin-left: 1rem;
-    padding: 1rem 2rem;
-    font-size: 1.6rem;
-    background-color: rgb(217, 218, 171);
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color .3s;
-}
-
-.signup-btn:hover {
-    background-color: rgb(223, 226, 17);
 }
 
 /* toDo List style */

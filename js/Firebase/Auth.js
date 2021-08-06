@@ -6,7 +6,7 @@ const createSignUpModal = () => {
     div.setAttribute('data-element', 'modal-signup');
     div.classList.add('popup');
     const html = `<h2 class="modal-title">Sign up <span data-element="signup-close" <span class="modal-btn-close">x</span></h2>
-                <form data-element="form-signup" class="form-signup">
+                <form data-element="form-signup" class="form-sign">
                     <div class="input-field">
                         <label for="signup-email">email </label>
                         <input type="email" name="signup-email" id="signup-email" required>
@@ -27,7 +27,7 @@ const createSignUpModal = () => {
                         <label for="signup-file">avatar (format .jpg) </label>
                         <input type="file" data-element="signup-file" name="signup-file" id="signup-file" required>
                     </div>
-                    <button type="submit" class="signup-btn">Sign up</button>
+                    <button type="submit" class="sign-btn">Sign up</button>
                 </form>`;
     div.innerHTML = html;
     const appContainer = document.querySelector('[data-element="app"]');
@@ -82,17 +82,17 @@ const createSignInModal = () => {
     const div = document.createElement('div');
     div.setAttribute('data-element', 'modal-signin');
     div.classList.add('popup');
-    const html = `<h2>Sign in</h2>
-                <form data-element="form-signin" class="form-signin">
+    const html = `<h2 class="modal-title">Sign in <span data-element="modal-btn-close" class="modal-btn-close">x</span></h2>
+                <form data-element="form-signin" class="form-sign">
                     <div class="input-field">
-                        <label for="signin-email"> Email address </label>
+                        <label for="signin-email">email </label>
                         <input type="email" name="signin-email" id="signin-email" required>
                     </div>
                     <div class="input-field">
-                        <label for="signin-password">Choose password</label>
+                        <label for="signin-password">password </label>
                         <input type="password" name="signin-password" id="signin-password" required>
                     </div>
-                    <button type="submit" class="signin-btn">Sign in</button>
+                    <button type="submit" class="sign-btn">Sign in</button>
                 </form>`;
     div.innerHTML = html;
     const appContainer = document.querySelector('[data-element="app"]');
@@ -101,7 +101,10 @@ const createSignInModal = () => {
 
 const signInUser = () => {
     createSignInModal();
+    const signInModal = document.querySelector('[data-element="modal-signin"]');
     const signInForm = document.querySelector('[data-element="form-signin"]');
+    const modalCloseBtn = document.querySelector('[data-element="modal-btn-close"]');
+    modalCloseBtn.addEventListener('click', () => signInModal.remove());
     signInForm.addEventListener('submit', e => {
         e.preventDefault();
         const email = signInForm['signin-email'].value;
@@ -109,10 +112,15 @@ const signInUser = () => {
         firebase.auth()
             .signInWithEmailAndPassword(email, password)
             .then(() => {
-                const signInModal = document.querySelector('[data-element="modal-signin"]');
                 signInModal.remove();
             })
-            .catch(err => console.log(err.message));
+            .catch(err => {
+                console.log(err.message);
+                const errorInfo = document.createElement('p');
+                errorInfo.classList.add('warning');
+                errorInfo.innerText = `${err.message}`;
+                signInModal.insertAdjacentElement('beforeend', errorInfo);
+            });
     });
 }
 
