@@ -5,7 +5,7 @@ const createSignUpModal = () => {
     const div = document.createElement('div');
     div.setAttribute('data-element', 'modal-signup');
     div.classList.add('popup');
-    const html = `<h2 class="modal-signup-title">Sign up <span data-element="signup-close" <span class="modal-btn-close">x</span></h2>
+    const html = `<h2 class="modal-title">Sign up <span data-element="signup-close" <span class="modal-btn-close">x</span></h2>
                 <form data-element="form-signup" class="form-signup">
                     <div class="input-field">
                         <label for="signup-email">email </label>
@@ -135,17 +135,17 @@ const createAccountModal = user => {
                 div.setAttribute('data-element', 'modal-account');
                 div.classList.add('popup');
                 div.style.display = 'none';
-                div.innerHTML = `<h2>Account details <span data-element="account-close" style="cursor:pointer;">X</span></h2>
-                <div data-element="account-details" class="account-details">
+                div.innerHTML = `<h2 class="modal-title">Account details <span data-element="account-close" class="modal-btn-close">x</span></h2>
+                <div class="modal-content-wrapper">
                     <img class="user-avatar" data-element="user-avatar" src="" alt="profile picture">
-                    <div>Signed in as: ${user.email}</div>
-                    <div>Biography: ${doc.data().biography}</div>
-                    <div>City: ${doc.data().city}</div>
+                    <div data-element="account-details" class="account-details">
+                        <p class="modal-account-text">Signed in as: <strong> ${user.email}</strong></p>
+                        <p class="modal-account-text">Biography: <strong>${doc.data().biography}</strong></p>
+                        <p class="modal-account-text">City: <strong>${doc.data().city}</strong></p>
                 </div>`;
                 const appContainer = document.querySelector('[data-element="app"]');
                 appContainer.append(div);
                 const userAvatar = document.querySelector('[data-element="user-avatar"]');
-                const accountModal = document.querySelector('[data-element="modal-account"]');
                 const accountDetails = document.querySelector('[data-element="account-details"]');
                 firebase.storage()
                     .ref(`avatars/${user.uid}/user-avatar.jpg`)
@@ -160,17 +160,17 @@ const createAccountModal = user => {
                         userIcon.classList.add('fas');
                         userIcon.classList.add('fa-user-circle');
                         accountDetails.insertAdjacentElement('afterbegin', userIcon);
-                    });
-                const closeBtn = document.querySelector('[data-element="account-close"]');
-                closeBtn.addEventListener('click', () => {
-                    accountModal.style.display = 'none';
-                })    
+                    });    
             })
 }
 
 const showAccountDetails = () => {
-    const accountDetails = document.querySelector('[data-element="modal-account"]');
-    accountDetails.style.display = 'block';
+    const accountModal = document.querySelector('[data-element="modal-account"]');
+    accountModal.style.display = 'block';
+    const closeBtn = document.querySelector('[data-element="account-close"]');
+    closeBtn.addEventListener('click', () => {
+        accountModal.style.display = 'none';
+    })
 }
 
 const listenForAuthChanges = () => {
