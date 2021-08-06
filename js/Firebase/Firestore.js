@@ -13,7 +13,7 @@ export const addTaskToFirestore = () => {
                         done: false,
                         user: user.uid
                     })
-                info.textContent = '';
+                info.innerText = '';
                 input.value = '';
             } else {
                 info.innerText = 'Enter task content ...';
@@ -58,9 +58,9 @@ const changeTaskContent = id => {
     input.addEventListener('keyup', e => {
         if (e.code === 'Enter') {
             if (input.value === '' || input.value === ' ') {
-                info.textContent = 'Enter task content ...';
+                info.innerText = 'Enter task content ...';
             } else {
-                info.textContent = '';
+                info.innerText = '';
                 popup.remove();
                 updateTaskContentInFirestore(id, input.value);
             }
@@ -100,6 +100,7 @@ export const renderTasksFromFirestore = doc => {
     const li = document.createElement('li');
     li.setAttribute('data-id', `${doc.id}`);
     li.setAttribute('data-is-finished', `${doc.data().done}`);
+    li.setAttribute('data-element', 'list-item');
     li.classList.add('list-item');
     if (doc.data().done === true) {
         li.classList.add('completed');
