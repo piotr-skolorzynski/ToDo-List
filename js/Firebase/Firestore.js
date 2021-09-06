@@ -16,7 +16,11 @@ export const addTaskToFirestore = () => {
                 info.innerText = '';
                 input.value = '';
             } else {
-                info.innerText = 'Enter task content ...';
+                info.innerText = 'Sign in to start...';
+                const timeout = setTimeout(() => {
+                    info.innerText = '';
+                    return clearTimeout(timeout);
+                }, 3000);
             }
         });
 }
